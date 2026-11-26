@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đỗ Minh An (Nope0612) — Hồ sơ cá nhân</title>
+  <meta name="description" content="Trang giới thiệu cá nhân của Đỗ Minh An (Nope0612) — Gamer, người nghe nhạc, thích code dạo. Kết nối qua GitHub, Discord, Facebook, Instagram, TikTok, Riot ID, Minecraft và Spotify.">
+  <meta name="theme-color" id="meta-theme-color" content="#080B12">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:title" content="Đỗ Minh An (Nope0612) — Hồ sơ cá nhân">
+  <meta property="og:description" content="Gamer · Người nghe nhạc · Thích code dạo. Khám phá góc game, playlist Spotify và kết nối cùng Đỗ Minh An.">
+  <meta property="og:image" content="assets/cover.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Đỗ Minh An (Nope0612) — Hồ sơ cá nhân">
+  <meta name="twitter:description" content="Gamer · Người nghe nhạc · Thích code dạo. Khám phá góc game, playlist Spotify và kết nối cùng Đỗ Minh An.">
+
+  <link rel="icon" href="assets/avatar.svg" type="image/svg+xml">
+
+  <!-- Typography: Plus Jakarta Sans, Inter & JetBrains Mono (Vietnamese subset supported) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Zero-FOUC Theme & JS Detection -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      var theme = 'dark';
+      try {
+        var saved = localStorage.getItem('profile-theme');
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          theme = 'light';
+        }
+      } catch (e) {}
+      root.setAttribute('data-theme', theme);
+      root.style.colorScheme = theme;
+      var meta = document.getElementById('meta-theme-color');
+      if (meta) meta.setAttribute('content', theme === 'light' ? '#F8FAFC' : '#080B12');
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Structured Data (Authentic Profile Data) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Đỗ Minh An",
+      "alternateName": "Nope0612",
+      "description": "Gamer · Người nghe nhạc · Thích code dạo",
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Việt Nam"
+      },
+      "sameAs": [
+        "https://github.com/andominh2022",
+        "https://www.facebook.com/dominhan0612",
+        "https://www.instagram.com/nope061206",
+        "https://www.tiktok.com/@dominhan0612"
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua tới nội dung chính</a>
+
+  <!-- Subtle Static Ambient Backdrop -->
+  <div class="bg-fx" aria-hidden="true">
+    <span class="bg-fx__wash bg-fx__wash--primary"></span>
+    <span class="bg-fx__wash bg-fx__wash--secondary"></span>
+    <span class="bg-fx__grid"></span>
+  </div>
+
+  <!-- Sticky Floating Navigation -->
+  <header class="site-header">
+    <div class="nav-shell">
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__brand" href="#top" aria-label="Nope0612 — Về đầu trang">
+          <span id="nav-monogram" class="nav__logo" aria-hidden="true">MA</span>
+          <span id="nav-brand-text" class="nav__brand-text">Nope0612</span>
+        </a>
+
+        <ul id="nav-menu" class="nav__list">
+          <li><a class="nav__link" href="#about">Giới thiệu</a></li>
+          <li><a class="nav__link" href="#gamertags">Ingame</a></li>
+          <li><a class="nav__link" href="#socials">Mạng xã hội</a></li>
+          <li><a class="nav__link" href="#music">Nhạc</a></li>
+          <li><a class="nav__link" href="#games">Game</a></li>
+          <li><a class="nav__link" href="#hobbies">Sở thích</a></li>
+          <li><a class="nav__link" href="#connect">Kết nối</a></li>
+        </ul>
+
+        <div class="nav__actions">
+          <button
+            id="theme-toggle"
+            class="icon-btn theme-toggle"
+            type="button"
+            aria-label="Chuyển sang giao diện sáng"
+            aria-pressed="false"
+            title="Đổi giao diện Sáng / Tối"
+          >
+            <!-- Sun Icon (shown in Light Mode / to represent Light) -->
+            <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <path d="M12 2.5v2.2M12 19.3v2.2M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2.5 12h2.2M19.3 12h2.2M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
+            </svg>
+            <!-- Moon Icon (shown in Dark Mode) -->
+            <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
+            </svg>
+          </button>
+
+          <a class="btn btn--primary btn--nav" href="#connect">Kết nối</a>
+
+          <button
+            id="nav-toggle"
+            class="icon-btn nav__toggle"
+            type="button"
+            aria-label="Mở menu điều hướng"
+            aria-expanded="false"
+            aria-controls="nav-drawer"
+          >
+            <span class="nav__bars" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Mobile / Tablet Collapsible Popover Drawer -->
+      <div id="nav-drawer" class="nav__drawer" aria-label="Menu điều hướng di động" hidden>
+        <ul class="nav__drawer-list">
+          <li><a class="nav__drawer-link" href="#about">Giới thiệu</a></li>
+          <li><a class="nav__drawer-link" href="#gamertags">Tên ingame</a></li>
+          <li><a class="nav__drawer-link" href="#socials">Mạng xã hội</a></li>
+          <li><a class="nav__drawer-link" href="#music">Playlist nhạc</a></li>
+          <li><a class="nav__drawer-link" href="#games">Game yêu thích</a></li>
+          <li><a class="nav__drawer-link" href="#hobbies">Sở thích</a></li>
+        </ul>
+        <a class="btn btn--primary nav__drawer-cta" href="#connect">Kết nối &amp; Rủ chơi game</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container" tabindex="-1">
+    <!-- HERO SECTION (12-Column Split Bento Hero) -->
+    <section id="top" class="hero" aria-labelledby="hero-name">
+      <div class="hero__grid">
+        <div class="hero__content">
+          <ul class="hero__meta" aria-label="Trạng thái và khu vực">
+            <li class="chip chip--status">
+              <span class="chip__dot" aria-hidden="true"></span>
+              <span id="hero-status">Đang online — rủ chơi game nhé!</span>
+            </li>
+            <li class="chip chip--location">
+              <svg class="chip__pin" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span id="hero-location">Việt Nam</span>
+            </li>
+          </ul>
+
+          <p class="hero__eyebrow">
+            <span>Xin chào, mình là</span>
+            <span class="hero__handle-pill">@<span id="hero-nickname">Nope0612</span></span>
+          </p>
+
+          <h1 id="hero-name" class="hero__name">Đỗ Minh An</h1>
+          <p id="hero-tagline" class="hero__tagline">Gamer · Người nghe nhạc · Thích code dạo</p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#connect">
+              <span>Kết nối &amp; Rủ chơi game</span>
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <button
+              id="hero-copy-discord"
+              class="btn btn--secondary"
+              type="button"
+              data-copy="value"
+              data-copy-value="anwir0612"
+            >
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span class="btn__copy-label" data-default-label="Copy Discord · anwir0612">Copy Discord · anwir0612</span>
+            </button>
+          </div>
+
+          <div class="hero__quick">
+            <span class="hero__quick-label">Kênh nhanh</span>
+            <div id="hero-socials" class="hero__socials" aria-label="Liên kết mạng xã hội nhanh"></div>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__card">
+            <div class="hero__cover">
+              <img id="hero-cover" src="assets/cover.svg" alt="" width="1600" height="640" fetchpriority="high">
+              <span class="hero__cover-shade" aria-hidden="true"></span>
+            </div>
+
+            <div class="hero__identity">
+              <div class="hero__avatar-wrap">
+                <img id="hero-avatar" class="hero__avatar" src="assets/avatar.svg" alt="Ảnh đại diện của Đỗ Minh An" width="160" height="160">
+              </div>
+
+              <div class="hero__pass">
+                <div class="hero__pass-meta">
+                  <span class="hero__pass-label">HỒ SƠ CÁ NHÂN</span>
+                  <span id="hero-pass-handle" class="hero__pass-handle">@Nope0612</span>
+                </div>
+                <a class="hero__pass-link" href="#gamertags">
+                  <span>ID Ingame</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASYMMETRIC 12-COLUMN BENTO GRID -->
+    <div class="bento">
+      <!-- ROW 1: ABOUT (7) + GAMERTAGS (5) -->
+      <section id="about" class="card card--about reveal" aria-labelledby="about-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">01 / HỒ SƠ</span>
+            <h2 id="about-title" class="card__title">Giới thiệu</h2>
+          </div>
+        </header>
+
+        <div id="about-bio" class="about__bio">
+          <p>Xin chào! Mình là một người thích chơi game, nghe nhạc và mày mò công nghệ. Ban ngày học/làm việc, buổi tối leo rank cùng bạn bè. Cứ thoải mái kết bạn qua các mạng xã hội bên dưới nhé!</p>
+        </div>
+
+        <div id="about-highlights" class="about__highlights" aria-label="Điểm nhấn cá nhân">
+          <div class="highlight-tile">
+            <span class="highlight-tile__label">Khu vực</span>
+            <strong class="highlight-tile__value">Việt Nam</strong>
+          </div>
+          <div class="highlight-tile">
+            <span class="highlight-tile__label">Góc game</span>
+            <strong class="highlight-tile__value">4 tựa game yêu thích</strong>
+          </div>
+          <div class="highlight-tile">
+            <span class="highlight-tile__label">Nhịp sống</span>
+            <strong class="highlight-tile__value">Game · Nhạc · Code</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="gamertags" class="card card--gamertags reveal" aria-labelledby="gamertags-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="12" x2="10" y2="12"></line>
+              <line x1="8" y1="10" x2="8" y2="14"></line>
+              <line x1="15" y1="13" x2="15.01" y2="13"></line>
+              <line x1="18" y1="11" x2="18.01" y2="11"></line>
+              <rect x="2" y="6" width="20" height="12" rx="4"></rect>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">02 / INGAME ID</span>
+            <h2 id="gamertags-title" class="card__title">Tên ingame</h2>
+          </div>
+        </header>
+        <p class="card__sub">Bấm vào thẻ bất kỳ để sao chép nhanh tên nhân vật và kết bạn trong game.</p>
+        <div id="gamertags-list" class="gamertags-list">
+          <span class="skeleton skeleton--tag" aria-hidden="true"></span>
+          <span class="skeleton skeleton--tag" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <!-- ROW 2: SOCIALS (5) + SPOTIFY PLAYLIST (7) -->
+      <section id="socials" class="card card--socials reveal" aria-labelledby="socials-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">03 / LIÊN KẾT</span>
+            <h2 id="socials-title" class="card__title">Mạng xã hội</h2>
+          </div>
+        </header>
+        <div id="socials-list" class="socials-list">
+          <span class="skeleton skeleton--tile" aria-hidden="true"></span>
+          <span class="skeleton skeleton--tile" aria-hidden="true"></span>
+          <span class="skeleton skeleton--tile" aria-hidden="true"></span>
+          <span class="skeleton skeleton--tile" aria-hidden="true"></span>
+          <span class="skeleton skeleton--tile" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <section id="music" class="card card--music reveal" aria-labelledby="music-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">04 / SPOTIFY</span>
+            <h2 id="music-title" class="card__title">Playlist nhạc</h2>
+          </div>
+          <a id="music-link" class="card__action" href="https://open.spotify.com/playlist/0MD6yrNQFFWtP85FWxtblF" target="_blank" rel="noopener noreferrer">
+            <span>Mở Spotify</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </header>
+        <div id="music-embed" class="music__embed">
+          <div class="music__placeholder" aria-hidden="true">
+            <span>Đang tải trình phát Spotify…</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROW 3: FAVORITE GAMES SHOWCASE (12 — Asymmetric Inner Bento) -->
+      <section id="games" class="card card--games reveal" aria-labelledby="games-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">05 / ROTATION</span>
+            <h2 id="games-title" class="card__title">Game yêu thích</h2>
+          </div>
+        </header>
+        <div id="games-list" class="games-list">
+          <span class="skeleton skeleton--game" aria-hidden="true"></span>
+          <span class="skeleton skeleton--game" aria-hidden="true"></span>
+          <span class="skeleton skeleton--game" aria-hidden="true"></span>
+          <span class="skeleton skeleton--game" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <!-- ROW 4: HOBBIES & INTERESTS (12 — Balanced 4-Column Grid) -->
+      <section id="hobbies" class="card card--hobbies reveal" aria-labelledby="hobbies-title">
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"></path>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">06 / ĐỜI THƯỜNG</span>
+            <h2 id="hobbies-title" class="card__title">Sở thích</h2>
+          </div>
+        </header>
+        <div id="hobbies-list" class="hobbies-list">
+          <span class="skeleton skeleton--hobby" aria-hidden="true"></span>
+          <span class="skeleton skeleton--hobby" aria-hidden="true"></span>
+          <span class="skeleton skeleton--hobby" aria-hidden="true"></span>
+          <span class="skeleton skeleton--hobby" aria-hidden="true"></span>
+        </div>
+      </section>
+
+      <!-- ROW 5: DEDICATED CONNECT / CTA SECTION (12 — 7 + 5 Split) -->
+      <section id="connect" class="card card--connect reveal" aria-labelledby="connect-title">
+        <div class="connect__grid">
+          <div class="connect__copy">
+            <div class="chip chip--status">
+              <span class="chip__dot" aria-hidden="true"></span>
+              <span id="connect-status">Đang online — rủ chơi game nhé!</span>
+            </div>
+            <h2 id="connect-title" class="connect__title">Cùng leo rank hoặc trò chuyện nhé?</h2>
+            <p class="connect__desc">
+              Cứ thoải mái nhắn mình qua Discord, Facebook hoặc kết bạn trực tiếp bằng Riot ID để lập team buổi tối. Mọi thông tin kết nối đều sẵn sàng bên cạnh.
+            </p>
+          </div>
+
+          <div id="connect-actions" class="connect__actions" aria-label="Hành động kết nối nhanh"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Minimal Elegant Footer -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <p class="site-footer__copy">
+          © <span id="footer-year">2026</span>
+          <strong id="footer-name">Đỗ Minh An</strong>
+          <span class="site-footer__sep" aria-hidden="true">·</span>
+          <span class="site-footer__nick">@<span id="footer-nick">Nope0612</span></span>
+        </p>
+        <p id="footer-tagline" class="site-footer__tagline">Gamer · Người nghe nhạc · Thích code dạo</p>
+      </div>
+
+      <div class="site-footer__links">
+        <a id="back-to-top" class="site-footer__top" href="#top">
+          <span>Lên đầu trang</span>
+          <span class="site-footer__arrow" aria-hidden="true">↑</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Accessible Live Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

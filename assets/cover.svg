@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="cvBase" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="50%" stop-color="#0D1628"/>
+      <stop offset="100%" stop-color="#0B2239"/>
+    </linearGradient>
+    <radialGradient id="cvGlowCyan" cx="78%" cy="28%" r="55%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.32"/>
+      <stop offset="50%" stop-color="#22D3EE" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#080B12" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cvGlowIndigo" cx="22%" cy="72%" r="55%">
+      <stop offset="0%" stop-color="#818CF8" stop-opacity="0.24"/>
+      <stop offset="55%" stop-color="#38BDF8" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#080B12" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cvBeam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#818CF8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="cvRing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#22D3EE" stop-opacity="0.05"/>
+    </linearGradient>
+    <pattern id="cvGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#94A3B8" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="cvSubGrid" width="240" height="240" patternUnits="userSpaceOnUse">
+      <path d="M240 0H0V240" fill="none" stroke="#38BDF8" stroke-opacity="0.11" stroke-width="1.2"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="640" fill="url(#cvBase)"/>
+  <rect width="1600" height="640" fill="url(#cvGlowCyan)"/>
+  <rect width="1600" height="640" fill="url(#cvGlowIndigo)"/>
+  <rect width="1600" height="640" fill="url(#cvGrid)"/>
+  <rect width="1600" height="640" fill="url(#cvSubGrid)"/>
+
+  <!-- Architectural Orbital Geometry -->
+  <g fill="none">
+    <circle cx="1180" cy="220" r="160" stroke="url(#cvRing)" stroke-width="1.5"/>
+    <circle cx="1180" cy="220" r="235" stroke="#38BDF8" stroke-opacity="0.16" stroke-width="1" stroke-dasharray="6 10"/>
+    <circle cx="1180" cy="220" r="320" stroke="#818CF8" stroke-opacity="0.12" stroke-width="1"/>
+    <path d="M760 520 C 960 340, 1260 320, 1560 440" stroke="url(#cvBeam)" stroke-width="2"/>
+    <path d="M120 460 C 420 300, 760 380, 1180 220" stroke="url(#cvBeam)" stroke-width="1.5" opacity="0.65"/>
+  </g>
+
+  <!-- Telemetry Nodes & Precision Crosshairs -->
+  <g stroke="#38BDF8" stroke-opacity="0.4" stroke-width="1.5" fill="none">
+    <path d="M240 136h16M248 128v16"/>
+    <path d="M720 184h16M728 176v16"/>
+    <path d="M1392 376h16M1400 368v16"/>
+  </g>
+
+  <g fill="#22D3EE">
+    <circle cx="1180" cy="220" r="5" opacity="0.9"/>
+    <circle cx="1180" cy="220" r="14" fill="none" stroke="#22D3EE" stroke-opacity="0.45" stroke-width="1.5"/>
+    <circle cx="480" cy="348" r="3.5" opacity="0.7"/>
+    <circle cx="960" cy="285" r="3" opacity="0.65"/>
+    <circle cx="1340" cy="145" r="3" fill="#818CF8" opacity="0.8"/>
+  </g>
+
+  <!-- Subtle Horizon Accent -->
+  <rect x="0" y="540" width="1600" height="1" fill="url(#cvBeam)" opacity="0.5"/>
+</svg>
