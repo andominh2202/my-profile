@@ -1,0 +1,206 @@
+/* ==========================================================================
+   NOPE0612 — AURORA AFTERDARK DESIGN TOKENS
+   Palette: Midnight #050811 · Deep Ocean #071525 · Aurora Blue #087CFF
+            Electric Cyan #00E5FF · Aurora Teal #00D6B5 · Nebula Violet #7657FF
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  --bg-canvas: #050811;
+  --bg-subtle: #071525;
+  --bg-surface: #0b182c;
+  --bg-elevated: #11223d;
+  --bg-tile: rgba(13, 28, 52, 0.65);
+  --bg-tile-hover: rgba(19, 41, 74, 0.90);
+
+  --glass-nav: rgba(7, 21, 37, 0.78);
+  --glass-card: rgba(11, 24, 44, 0.74);
+  --glass-elevated: rgba(17, 34, 61, 0.92);
+  --glass-highlight: rgba(139, 245, 255, 0.10);
+
+  --accent-primary: #087CFF;
+  --accent-cyan: #00E5FF;
+  --accent-ice: #8BF5FF;
+  --accent-teal: #00D6B5;
+  --accent-violet: #7657FF;
+  --accent-purple: #A78BFA;
+
+  --accent-text: #8BF5FF;
+  --accent-cyan-text: #00E5FF;
+  --accent-soft: rgba(0, 229, 255, 0.11);
+  --accent-soft-hover: rgba(0, 229, 255, 0.18);
+  --accent-border: rgba(0, 229, 255, 0.28);
+
+  --grad-brand: linear-gradient(135deg, #00E5FF 0%, #087CFF 48%, #7657FF 100%);
+  --grad-cta: linear-gradient(135deg, #00E5FF 0%, #00D6B5 48%, #087CFF 100%);
+  --grad-cta-hover: linear-gradient(135deg, #8BF5FF 0%, #00E5FF 50%, #A78BFA 100%);
+  --grad-hero-name: linear-gradient(112deg, #F4FAFF 15%, #8BF5FF 55%, #A78BFA 92%);
+  --grad-connect:
+    radial-gradient(65% 90% at var(--px, 15%) var(--py, 20%), rgba(0, 229, 255, 0.16), transparent 62%),
+    radial-gradient(70% 90% at 90% 90%, rgba(118, 87, 255, 0.16), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(0, 214, 181, 0.10), transparent 65%);
+
+  --text-primary: #F4FAFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-on-accent: #050811;
+
+  --border-subtle: rgba(139, 245, 255, 0.08);
+  --border-default: rgba(139, 245, 255, 0.15);
+  --border-strong: rgba(0, 229, 255, 0.45);
+  --focus-ring: #00E5FF;
+
+  --status-dot: #00D6B5;
+  --status-text: #8BF5FF;
+  --status-bg: rgba(0, 214, 181, 0.12);
+  --status-border: rgba(0, 214, 181, 0.30);
+
+  --aurora-cyan: rgba(0, 229, 255, 0.15);
+  --aurora-teal: rgba(0, 214, 181, 0.11);
+  --aurora-violet: rgba(118, 87, 255, 0.15);
+  --grid-line: rgba(139, 245, 255, 0.04);
+  --noise-opacity: 0.028;
+  --cover-shade: linear-gradient(180deg, rgba(5, 8, 17, 0.08) 30%, rgba(11, 24, 44, 0.92) 100%);
+
+  --shadow-sm: 0 2px 10px -2px rgba(2, 6, 23, 0.65);
+  --shadow-md: 0 16px 40px -12px rgba(2, 6, 23, 0.80);
+  --shadow-lg: 0 26px 56px -14px rgba(2, 6, 23, 0.92), 0 0 32px -8px rgba(0, 229, 255, 0.20);
+  --shadow-glow: 0 10px 30px -6px rgba(8, 124, 255, 0.38), 0 0 22px -8px rgba(0, 229, 255, 0.30);
+
+  --brand-github: #F4FAFF;
+  --brand-github-ink: #050811;
+  --brand-discord: #A78BFA;
+  --brand-discord-ink: #050811;
+  --brand-facebook: #087CFF;
+  --brand-facebook-ink: #F4FAFF;
+  --brand-instagram: #7657FF;
+  --brand-instagram-ink: #F4FAFF;
+  --brand-tiktok: #00E5FF;
+  --brand-tiktok-ink: #050811;
+  --brand-spotify: #00D6B5;
+  --brand-spotify-ink: #050811;
+  --brand-riot: #38BDF8;
+  --brand-minecraft: #00D6B5;
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg-canvas: #F8FAFC;
+  --bg-subtle: #F1F5F9;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-tile: #F8FAFC;
+  --bg-tile-hover: #F1F5F9;
+
+  --glass-nav: rgba(255, 255, 255, 0.86);
+  --glass-card: rgba(255, 255, 255, 0.92);
+  --glass-elevated: rgba(255, 255, 255, 0.96);
+  --glass-highlight: rgba(255, 255, 255, 0.96);
+
+  --accent-primary: #0284C7;
+  --accent-cyan: #0891B2;
+  --accent-ice: #0369A1;
+  --accent-teal: #0D9488;
+  --accent-violet: #6366F1;
+  --accent-purple: #7C3AED;
+
+  --accent-text: #0369A1;
+  --accent-cyan-text: #0E7490;
+  --accent-soft: rgba(2, 132, 199, 0.08);
+  --accent-soft-hover: rgba(2, 132, 199, 0.14);
+  --accent-border: rgba(2, 132, 199, 0.24);
+
+  --grad-brand: linear-gradient(135deg, #0284C7 0%, #0D9488 50%, #6366F1 100%);
+  --grad-cta: linear-gradient(135deg, #0369A1 0%, #0284C7 55%, #4F46E5 100%);
+  --grad-cta-hover: linear-gradient(135deg, #0284C7 0%, #0369A1 55%, #4338CA 100%);
+  --grad-hero-name: linear-gradient(110deg, #0F172A 20%, #0369A1 65%, #4338CA 95%);
+  --grad-connect:
+    radial-gradient(65% 90% at var(--px, 15%) var(--py, 20%), rgba(2, 132, 199, 0.09), transparent 62%),
+    radial-gradient(70% 90% at 90% 90%, rgba(99, 102, 241, 0.08), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(13, 148, 136, 0.06), transparent 65%);
+
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-on-accent: #FFFFFF;
+
+  --border-subtle: #EDF2F7;
+  --border-default: #E2E8F0;
+  --border-strong: rgba(2, 132, 199, 0.42);
+  --focus-ring: #0369A1;
+
+  --status-dot: #0D9488;
+  --status-text: #065F46;
+  --status-bg: rgba(13, 148, 136, 0.10);
+  --status-border: rgba(13, 148, 136, 0.28);
+
+  --aurora-cyan: rgba(2, 132, 199, 0.08);
+  --aurora-teal: rgba(13, 148, 136, 0.06);
+  --aurora-violet: rgba(99, 102, 241, 0.07);
+  --grid-line: rgba(15, 23, 42, 0.035);
+  --noise-opacity: 0.015;
+  --cover-shade: linear-gradient(180deg, rgba(5, 8, 17, 0) 45%, rgba(5, 8, 17, 0.58) 100%);
+
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+  --shadow-md: 0 12px 30px -8px rgba(15, 23, 42, 0.07), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 42px -12px rgba(15, 23, 42, 0.12), 0 4px 14px -2px rgba(2, 132, 199, 0.09);
+  --shadow-glow: 0 10px 24px -6px rgba(3, 105, 161, 0.28);
+
+  --brand-github: #24292F;
+  --brand-github-ink: #FFFFFF;
+  --brand-discord: #4F46E5;
+  --brand-discord-ink: #FFFFFF;
+  --brand-facebook: #1D4ED8;
+  --brand-facebook-ink: #FFFFFF;
+  --brand-instagram: #6366F1;
+  --brand-instagram-ink: #FFFFFF;
+  --brand-tiktok: #0F172A;
+  --brand-tiktok-ink: #FFFFFF;
+  --brand-spotify: #0D9488;
+  --brand-spotify-ink: #FFFFFF;
+  --brand-riot: #0284C7;
+  --brand-minecraft: #0D9488;
+
+  color-scheme: light;
+}
+
+:root {
+  --font-display: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --container-max: 1200px;
+  --container-pad: clamp(16px, 3.5vw, 32px);
+  --grid-gap: clamp(16px, 1.8vw, 22px);
+  --card-pad: clamp(20px, 2.4vw, 28px);
+
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --radius-full: 9999px;
+
+  --z-bg: -1;
+  --z-header: 100;
+  --z-skip: 200;
+  --z-toast: 300;
+
+  --dur-instant: 100ms;
+  --dur-micro: 170ms;
+  --dur-hover: 220ms;
+  --dur-theme: 260ms;
+  --dur-reveal: 480ms;
+
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-pop: cubic-bezier(0.34, 1.22, 0.64, 1);
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --container-max: 1300px;
+    --grid-gap: 24px;
+  }
+}
