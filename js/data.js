@@ -28,7 +28,7 @@ window.PROFILE = {
   status: 'Đang online — rủ chơi game nhé!', // TODO: thay bằng của bạn
 
   socials: [
-    { id: 'github', label: 'GitHub', handle: 'andominh2022', url: 'https://github.com/andominh2022' }, // TODO: thay bằng của bạn
+    { id: 'github', label: 'GitHub', handle: 'andominh2202', url: 'https://github.com/andominh2202' }, // TODO: thay bằng của bạn
     { id: 'discord', label: 'Discord', handle: 'anwir0612', url: '' }, // TODO: thay bằng của bạn (url trống = bấm để copy)
     { id: 'facebook', label: 'Facebook', handle: 'dominhan0612', url: 'https://www.facebook.com/dominhan0612' }, // TODO: thay bằng của bạn
     { id: 'instagram', label: 'Instagram', handle: '@nope061206', url: 'https://www.instagram.com/nope061206' }, // TODO: thay bằng của bạn
