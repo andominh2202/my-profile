@@ -36,8 +36,8 @@ window.PROFILE = {
   ],
 
   gamerTags: [
-    { platform: 'riot', label: 'Riot ID', value: 'TenCuaBan#VN1' }, // TODO: thay bằng của bạn
-    { platform: 'minecraft', label: 'Minecraft', value: 'TenCuaBan_MC' } // TODO: thay bằng của bạn
+    { platform: 'riot', label: 'Riot ID', value: '' }, // TODO: điền Riot ID thật của bạn (vd: 'Ten#VN1')
+    { platform: 'minecraft', label: 'Minecraft', value: '' } // TODO: điền tên Minecraft thật của bạn
   ],
 
   spotify: {

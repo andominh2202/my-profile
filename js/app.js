@@ -110,6 +110,19 @@
     return (parts[parts.length - 2].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
   }
 
+  function setSectionVisible(sectionId, visible) {
+    var sec = $(sectionId);
+    if (sec) sec.hidden = !visible;
+    var navLinks = document.querySelectorAll(
+      '.nav__link[href="#' + sectionId + '"], .nav__drawer-link[href="#' + sectionId + '"]'
+    );
+    Array.prototype.forEach.call(navLinks, function (link) {
+      var li = link.parentElement;
+      if (li && li.tagName === 'LI') li.hidden = !visible;
+      else link.hidden = !visible;
+    });
+  }
+
   /* ---------- Theme Engine (Dark + Light + System Sync + Persistence) ---------- */
   var themeSwitchTimer = null;
 
@@ -169,6 +182,14 @@
 
   /* ---------- Spotify Embed ---------- */
   var SPOTIFY_TYPES = ['playlist', 'album', 'track', 'artist', 'episode', 'show'];
+  var SPOTIFY_LABELS = {
+    playlist: 'Playlist Spotify',
+    album: 'Album Spotify',
+    track: 'Bài hát Spotify',
+    artist: 'Nghệ sĩ Spotify',
+    episode: 'Tập podcast Spotify',
+    show: 'Podcast Spotify'
+  };
 
   function parseSpotify(input) {
     var raw = str(input).trim();
@@ -195,36 +216,29 @@
     return { type: type, id: id };
   }
 
+  function showMusicFallback(embed, spotifyUrl, message) {
+    clear(embed);
+    var box = el('div', 'music-embed__fallback');
+    box.appendChild(el('p', '', message));
+    if (spotifyUrl) {
+      var action = el('a', 'btn btn--secondary', 'Mở trực tiếp trên Spotify ↗');
+      action.href = spotifyUrl;
+      action.target = '_blank';
+      action.rel = 'noopener noreferrer';
+      box.appendChild(action);
+    }
+    embed.appendChild(box);
+  }
+
   function renderMusic(spotify) {
     var embed = $('music-embed');
     var link = $('music-link');
     var info = parseSpotify(spotify && spotify.playlistUrl);
-
-    if (embed) {
-      clear(embed);
-      if (info) {
-        var iframe = document.createElement('iframe');
-        iframe.title = 'Trình phát Spotify playlist';
-        iframe.width = '100%';
-        iframe.height = '352';
-        iframe.setAttribute('loading', 'lazy');
-        iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
-        iframe.addEventListener('load', function () {
-          iframe.classList.add('is-loaded');
-        }, { once: true });
-        iframe.src = 'https://open.spotify.com/embed/' + info.type + '/' + info.id + '?utm_source=generator&theme=0';
-        embed.appendChild(iframe);
-        // Fallback visibility in case cross-origin load event is delayed offline
-        setTimeout(function () { iframe.classList.add('is-loaded'); }, 900);
-      } else {
-        embed.appendChild(el('p', 'music-embed__fallback',
-          'Chưa có playlist hợp lệ. Hãy dán link playlist Spotify vào js/data.js (spotify.playlistUrl).'));
-      }
-    }
+    var directUrl = info ? 'https://open.spotify.com/' + info.type + '/' + info.id : '';
 
     if (link) {
       if (info) {
-        link.setAttribute('href', 'https://open.spotify.com/' + info.type + '/' + info.id);
+        link.setAttribute('href', directUrl);
         link.setAttribute('target', '_blank');
         link.setAttribute('rel', 'noopener noreferrer');
         link.hidden = false;
@@ -232,6 +246,87 @@
         link.removeAttribute('href');
         link.hidden = true;
       }
+    }
+
+    if (!embed) return;
+    clear(embed);
+
+    if (!info) {
+      showMusicFallback(embed, '', 'Chưa có liên kết Spotify hợp lệ trong cấu hình.');
+      return;
+    }
+
+    if (window.navigator && window.navigator.onLine === false) {
+      showMusicFallback(embed, directUrl, 'Bạn đang ngoại tuyến nên không thể tải trình phát Spotify nhúng.');
+      return;
+    }
+
+    var placeholder = el('div', 'music__placeholder');
+    placeholder.appendChild(el('span', '', 'Đang tải trình phát Spotify…'));
+    var quickFallback = el('a', 'card__action', 'Mở trực tiếp trên Spotify ↗');
+    quickFallback.href = directUrl;
+    quickFallback.target = '_blank';
+    quickFallback.rel = 'noopener noreferrer';
+    quickFallback.style.marginLeft = '0';
+    placeholder.appendChild(quickFallback);
+    embed.appendChild(placeholder);
+
+    function mountIframe() {
+      if (window.navigator && window.navigator.onLine === false) {
+        showMusicFallback(embed, directUrl, 'Bạn đang ngoại tuyến nên không thể tải trình phát Spotify nhúng.');
+        return;
+      }
+
+      var settled = false;
+      var iframe = document.createElement('iframe');
+      iframe.title = SPOTIFY_LABELS[info.type] || 'Trình phát Spotify';
+      iframe.width = '100%';
+      iframe.height = '352';
+      iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture');
+
+      var loadTimeout = setTimeout(function () {
+        if (!settled) {
+          settled = true;
+          showMusicFallback(
+            embed,
+            directUrl,
+            'Trình phát Spotify không phản hồi (có thể bị chặn hoặc mất kết nối).'
+          );
+        }
+      }, 7000);
+
+      iframe.addEventListener('load', function () {
+        if (settled) return;
+        settled = true;
+        clearTimeout(loadTimeout);
+        iframe.classList.add('is-loaded');
+        if (placeholder.parentNode === embed) {
+          embed.removeChild(placeholder);
+        }
+      }, { once: true });
+
+      iframe.addEventListener('error', function () {
+        if (settled) return;
+        settled = true;
+        clearTimeout(loadTimeout);
+        showMusicFallback(embed, directUrl, 'Không thể tải trình phát Spotify nhúng.');
+      }, { once: true });
+
+      var themeParam = getActiveTheme() === 'dark' ? '&theme=0' : '';
+      iframe.src = 'https://open.spotify.com/embed/' + info.type + '/' + info.id + '?utm_source=generator' + themeParam;
+      embed.appendChild(iframe);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var musicIo = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          musicIo.disconnect();
+          mountIframe();
+        }
+      }, { rootMargin: '300px 0px' });
+      musicIo.observe(embed);
+    } else {
+      mountIframe();
     }
   }
 
@@ -246,7 +341,10 @@
     var hlRoot = $('about-highlights');
     if (hlRoot) {
       clear(hlRoot);
-      var gameCount = Array.isArray(p.games) ? p.games.length : 0;
+      var validGames = Array.isArray(p.games)
+        ? p.games.filter(function (g) { return g && str(g.title).trim(); })
+        : [];
+      var gameCount = validGames.length;
       var items = [
         { label: 'Khu vực', value: str(p.location) || 'Việt Nam' },
         { label: 'Góc game', value: gameCount > 0 ? gameCount + ' tựa game yêu thích' : 'Đang cập nhật' },
@@ -283,7 +381,10 @@
           labelSpan.setAttribute('data-default-label', labelText);
         }
       } else {
-        var riotTag = Array.isArray(p.gamerTags) && p.gamerTags[0];
+        var validTags = Array.isArray(p.gamerTags)
+          ? p.gamerTags.filter(function (t) { return t && str(t.value).trim(); })
+          : [];
+        var riotTag = validTags[0];
         if (riotTag && riotTag.value) {
           var val = str(riotTag.value);
           var rLabel = 'Copy ' + str(riotTag.label || 'ID') + ' · ' + val;
@@ -348,8 +449,13 @@
     if (!root) return;
     clear(root);
 
-    (list || []).forEach(function (s) {
-      if (!s) return;
+    var valid = (list || []).filter(function (s) {
+      return s && str(s.label).trim() && (safeUrl(s.url) || str(s.handle).trim());
+    });
+    setSectionVisible('socials', valid.length > 0);
+    if (!valid.length) return;
+
+    valid.forEach(function (s) {
       var id = str(s.id).toLowerCase().replace(/[^a-z0-9-]/g, '');
       var url = safeUrl(s.url);
       var card;
@@ -396,8 +502,26 @@
     if (!root) return;
     clear(root);
 
-    (list || []).forEach(function (t) {
-      if (!t) return;
+    var valid = (list || []).filter(function (t) {
+      return t && str(t.value).trim();
+    });
+    setSectionVisible('gamertags', valid.length > 0);
+
+    var passLink = document.querySelector('.hero__pass-link');
+    if (passLink) {
+      if (valid.length > 0) {
+        passLink.setAttribute('href', '#gamertags');
+        passLink.hidden = false;
+      } else {
+        passLink.setAttribute('href', '#socials');
+        var passLabel = passLink.querySelector('span');
+        if (passLabel) passLabel.textContent = 'Mạng xã hội';
+      }
+    }
+
+    if (!valid.length) return;
+
+    valid.forEach(function (t) {
       var platform = str(t.platform).toLowerCase().replace(/[^a-z0-9-]/g, '');
       var btn = document.createElement('button');
       btn.type = 'button';
@@ -427,8 +551,13 @@
     if (!root) return;
     clear(root);
 
-    (list || []).forEach(function (g, index) {
-      if (!g) return;
+    var valid = (list || []).filter(function (g) {
+      return g && str(g.title).trim();
+    });
+    setSectionVisible('games', valid.length > 0);
+    if (!valid.length) return;
+
+    valid.forEach(function (g, index) {
       var card = el('article', 'game-card' + (index === 0 ? ' game-card--featured' : ''));
       var cover = el('div', 'game-card__cover');
       var title = str(g.title);
@@ -474,8 +603,13 @@
     if (!root) return;
     clear(root);
 
-    (list || []).forEach(function (h) {
-      if (!h) return;
+    var valid = (list || []).filter(function (h) {
+      return h && str(h.title).trim();
+    });
+    setSectionVisible('hobbies', valid.length > 0);
+    if (!valid.length) return;
+
+    valid.forEach(function (h) {
       var card = el('div', 'hobby-card');
       var icon = el('span', 'hobby-card__icon', h.icon || '✦');
       icon.setAttribute('aria-hidden', 'true');
@@ -497,7 +631,9 @@
     clear(root);
 
     var socials = Array.isArray(p.socials) ? p.socials : [];
-    var tags = Array.isArray(p.gamerTags) ? p.gamerTags : [];
+    var tags = Array.isArray(p.gamerTags)
+      ? p.gamerTags.filter(function (t) { return t && str(t.value).trim(); })
+      : [];
 
     // 1. Copyable socials (e.g. Discord)
     socials.forEach(function (s) {
@@ -581,6 +717,9 @@
       toast.classList.add('is-visible');
       toastTimer = setTimeout(function () {
         toast.classList.remove('is-visible');
+        setTimeout(function () {
+          if (!toast.classList.contains('is-visible')) toast.textContent = '';
+        }, 240);
         toastTimer = null;
       }, 2200);
     });
@@ -746,7 +885,9 @@
       if (id && sectionIds.indexOf(id) === -1) sectionIds.push(id);
     });
 
-    var sections = sectionIds.map($).filter(Boolean);
+    var sections = sectionIds.map($).filter(function (sec) {
+      return sec && !sec.hidden;
+    });
     if (!sections.length) return;
 
     var clickLockUntil = 0;
