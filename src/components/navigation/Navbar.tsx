@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Command, Moon, Sun, Terminal } from 'lucide-react';
+import { Command, Moon, SlidersHorizontal, Sun, Terminal } from 'lucide-react';
 import type { AuroraTheme } from '../../hooks/useTheme';
 
 export interface NavItem {
@@ -17,6 +17,7 @@ interface NavbarProps {
   onToggleTheme: () => void;
   onOpenCommand: () => void;
   onOpenTerminal: () => void;
+  onOpenA11y: () => void;
   onNavigate: (id: string) => void;
 }
 
@@ -29,6 +30,7 @@ export function Navbar({
   onToggleTheme,
   onOpenCommand,
   onOpenTerminal,
+  onOpenA11y,
   onNavigate
 }: NavbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -121,6 +123,16 @@ export function Navbar({
               title="Developer Terminal"
             >
               <Terminal size={18} aria-hidden="true" />
+            </button>
+
+            <button
+              className="icon-btn"
+              type="button"
+              onClick={onOpenA11y}
+              aria-label="Mở cài đặt trợ năng"
+              title="Trợ năng & Hiển thị"
+            >
+              <SlidersHorizontal size={18} aria-hidden="true" />
             </button>
 
             <button

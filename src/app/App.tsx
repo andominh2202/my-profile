@@ -21,6 +21,7 @@ import { Toast } from '../components/common/Toast';
 import { Preloader } from '../components/effects/Preloader';
 import { CommandPalette } from '../components/common/CommandPalette';
 import { DevTerminal } from '../components/terminal/DevTerminal';
+import { A11yPanel } from '../components/common/A11yPanel';
 import { useA11ySettings } from '../hooks/useA11ySettings';
 
 const AuroraScene = lazy(() =>
@@ -38,7 +39,7 @@ function getInitials(name: string): string {
 
 export function App() {
   const { theme, setTheme, cycleTheme } = useTheme();
-  const { settings: a11y } = useA11ySettings();
+  const { settings: a11y, toggleSetting } = useA11ySettings();
   const detectedQuality = useQualityLevel();
   const quality = a11y.reduceMotion || a11y.simplifyEffects ? 'low' : detectedQuality;
   const themeMode = theme === 'polar' ? 'light' : 'dark';
@@ -47,6 +48,7 @@ export function App() {
   const [toastMsg, setToastMsg] = useState('');
   const [cmdOpen, setCmdOpen] = useState(false);
   const [termOpen, setTermOpen] = useState(false);
+  const [a11yOpen, setA11yOpen] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
   const progressRef = useRef<HTMLDivElement | null>(null);
   const toastTimerRef = useRef<number | null>(null);
@@ -241,6 +243,7 @@ export function App() {
         onToggleTheme={cycleTheme}
         onOpenCommand={() => setCmdOpen(true)}
         onOpenTerminal={() => setTermOpen(true)}
+        onOpenA11y={() => setA11yOpen(true)}
         onNavigate={scrollToSection}
       />
 
@@ -287,6 +290,12 @@ export function App() {
         onOpenTerminal={() => setTermOpen(true)}
       />
       <DevTerminal open={termOpen} onClose={() => setTermOpen(false)} />
+      <A11yPanel
+        open={a11yOpen}
+        settings={a11y}
+        onToggle={toggleSetting}
+        onClose={() => setA11yOpen(false)}
+      />
       <Toast message={toastMsg} />
     </>
   );

@@ -50,6 +50,9 @@ export function DevTerminal({ open, onClose }: DevTerminalProps) {
       case 'music':
         reply = `Spotify Playlist: ${PROFILE.spotify.playlistUrl}`;
         break;
+      case 'skills':
+        reply = `Sở thích công nghệ & nhịp sống: ${PROFILE.tagline}\n- ${PROFILE.hobbies.map((h) => `${h.title}: ${h.desc}`).join('\n- ')}`;
+        break;
       case 'social':
       case 'contact':
         reply = PROFILE.socials.map((s) => `- ${s.label}: ${s.handle}${s.url ? ' (' + s.url + ')' : ' (copy)'}`).join('\n');
