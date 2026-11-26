@@ -13,6 +13,19 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -770,8 +783,8 @@ button {
     radial-gradient(80% 70% at 0% 0%, rgba(56, 189, 248, 0.10), transparent 65%),
     radial-gradient(60% 60% at 100% 100%, rgba(167, 139, 250, 0.08), transparent 65%),
     var(--glass-card);
-  backdrop-filter: blur(16px) saturate(145%);
-  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
   animation: enter-up var(--dur-reveal) var(--ease-reveal) 40ms both;
 }
@@ -913,8 +926,8 @@ button {
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-default);
   background: var(--glass-card);
-  backdrop-filter: blur(16px) saturate(145%);
-  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  backdrop-filter: blur(10px) saturate(135%);
+  -webkit-backdrop-filter: blur(10px) saturate(135%);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
   overflow: hidden;
   transition: border-color var(--dur-hover) var(--ease-out);
@@ -1219,8 +1232,8 @@ button {
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-default);
   background: var(--glass-card);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
   transition: border-color var(--dur-hover) var(--ease-out);
 }

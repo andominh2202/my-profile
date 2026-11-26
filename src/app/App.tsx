@@ -110,10 +110,11 @@ export function App() {
     }
 
     const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.1,
+      wheelMultiplier: 1,
       smoothWheel: true
     });
+    document.documentElement.classList.add('lenis', 'lenis-smooth');
     lenisRef.current = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -177,6 +178,7 @@ export function App() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      document.documentElement.classList.remove('lenis', 'lenis-smooth');
       ctx.revert();
       gsap.ticker.remove(tickerFn);
       lenis.destroy();

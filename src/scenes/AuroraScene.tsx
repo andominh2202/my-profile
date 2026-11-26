@@ -65,9 +65,9 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
       return;
     }
 
-    const dpr = Math.min(window.devicePixelRatio || 1, quality === 'high' ? 1.5 : 1);
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const scale = quality === 'high' ? 0.65 : 0.5;
+    renderer.setPixelRatio(1);
+    renderer.setSize(Math.floor(window.innerWidth * scale), Math.floor(window.innerHeight * scale), false);
     renderer.domElement.className = 'bg-fx__canvas is-ready';
     container.appendChild(renderer.domElement);
 
@@ -77,7 +77,7 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
     const uniforms = {
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-      uRes: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+      uRes: { value: new THREE.Vector2(Math.floor(window.innerWidth * scale), Math.floor(window.innerHeight * scale)) }
     };
 
     const planeGeo = new THREE.PlaneGeometry(2, 2);
@@ -136,8 +136,10 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
 
     const onResize = () => {
       if (!renderer) return;
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      uniforms.uRes.value.set(window.innerWidth, window.innerHeight);
+      const w = Math.floor(window.innerWidth * scale);
+      const h = Math.floor(window.innerHeight * scale);
+      renderer.setSize(w, h, false);
+      uniforms.uRes.value.set(w, h);
     };
 
     const onVisibility = () => {
