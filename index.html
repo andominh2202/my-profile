@@ -70,7 +70,7 @@
         "name": "Việt Nam"
       },
       "sameAs": [
-        "https://github.com/andominh2022",
+        "https://github.com/andominh2202",
         "https://www.facebook.com/dominhan0612",
         "https://www.instagram.com/nope061206",
         "https://www.tiktok.com/@dominhan0612"
@@ -82,12 +82,16 @@
 <body>
   <a class="skip-link" href="#main">Bỏ qua tới nội dung chính</a>
 
-  <!-- Subtle Static Ambient Backdrop -->
+  <!-- Multi-Layer Cinematic Backdrop -->
   <div class="bg-fx" aria-hidden="true">
-    <span class="bg-fx__wash bg-fx__wash--primary"></span>
-    <span class="bg-fx__wash bg-fx__wash--secondary"></span>
+    <span class="bg-fx__aurora bg-fx__aurora--cyan"></span>
+    <span class="bg-fx__aurora bg-fx__aurora--violet"></span>
+    <span class="bg-fx__aurora bg-fx__aurora--warm"></span>
     <span class="bg-fx__grid"></span>
+    <span class="bg-fx__noise"></span>
   </div>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- Sticky Floating Navigation -->
   <header class="site-header">
@@ -100,10 +104,11 @@
 
         <ul id="nav-menu" class="nav__list">
           <li><a class="nav__link" href="#about">Giới thiệu</a></li>
-          <li><a class="nav__link" href="#gamertags">Ingame</a></li>
+          <li hidden><a class="nav__link" href="#gamertags">Ingame</a></li>
           <li><a class="nav__link" href="#socials">Mạng xã hội</a></li>
           <li><a class="nav__link" href="#music">Nhạc</a></li>
           <li><a class="nav__link" href="#games">Game</a></li>
+          <li hidden><a class="nav__link" href="#projects">Dự án</a></li>
           <li><a class="nav__link" href="#hobbies">Sở thích</a></li>
           <li><a class="nav__link" href="#connect">Kết nối</a></li>
         </ul>
@@ -151,10 +156,11 @@
       <div id="nav-drawer" class="nav__drawer" aria-label="Menu điều hướng di động" hidden>
         <ul class="nav__drawer-list">
           <li><a class="nav__drawer-link" href="#about">Giới thiệu</a></li>
-          <li><a class="nav__drawer-link" href="#gamertags">Tên ingame</a></li>
+          <li hidden><a class="nav__drawer-link" href="#gamertags">Tên ingame</a></li>
           <li><a class="nav__drawer-link" href="#socials">Mạng xã hội</a></li>
           <li><a class="nav__drawer-link" href="#music">Playlist nhạc</a></li>
           <li><a class="nav__drawer-link" href="#games">Game yêu thích</a></li>
+          <li hidden><a class="nav__drawer-link" href="#projects">Dự án</a></li>
           <li><a class="nav__drawer-link" href="#hobbies">Sở thích</a></li>
         </ul>
         <a class="btn btn--primary nav__drawer-cta" href="#connect">Kết nối &amp; Rủ chơi game</a>
@@ -170,7 +176,7 @@
           <ul class="hero__meta" aria-label="Trạng thái và khu vực">
             <li class="chip chip--status">
               <span class="chip__dot" aria-hidden="true"></span>
-              <span id="hero-status">Đang online — rủ chơi game nhé!</span>
+              <span id="hero-status">Thường online buổi tối</span>
             </li>
             <li class="chip chip--location">
               <svg class="chip__pin" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -234,8 +240,8 @@
                   <span class="hero__pass-label">HỒ SƠ CÁ NHÂN</span>
                   <span id="hero-pass-handle" class="hero__pass-handle">@Nope0612</span>
                 </div>
-                <a class="hero__pass-link" href="#gamertags">
-                  <span>ID Ingame</span>
+                <a class="hero__pass-link" href="#socials">
+                  <span>Mạng xã hội</span>
                   <span aria-hidden="true">→</span>
                 </a>
               </div>
@@ -282,7 +288,7 @@
         </div>
       </section>
 
-      <section id="gamertags" class="card card--gamertags reveal" aria-labelledby="gamertags-title">
+      <section id="gamertags" class="card card--gamertags reveal" aria-labelledby="gamertags-title" hidden>
         <header class="card__head">
           <span class="card__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
@@ -377,7 +383,24 @@
         </div>
       </section>
 
-      <!-- ROW 4: HOBBIES & INTERESTS (12 — Balanced 4-Column Grid) -->
+      <!-- ROW 4: PROJECTS (12 — Tự ẩn khi mảng projects trống) -->
+      <section id="projects" class="card card--projects reveal" aria-labelledby="projects-title" hidden>
+        <header class="card__head">
+          <span class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+          </span>
+          <div class="card__titles">
+            <span class="card__eyebrow">06 / DỰ ÁN</span>
+            <h2 id="projects-title" class="card__title">Dự án</h2>
+          </div>
+        </header>
+        <div id="projects-list" class="projects-list"></div>
+      </section>
+
+      <!-- ROW 5: HOBBIES & INTERESTS (12 — Balanced 4-Column Grid) -->
       <section id="hobbies" class="card card--hobbies reveal" aria-labelledby="hobbies-title">
         <header class="card__head">
           <span class="card__icon" aria-hidden="true">
@@ -386,7 +409,7 @@
             </svg>
           </span>
           <div class="card__titles">
-            <span class="card__eyebrow">06 / ĐỜI THƯỜNG</span>
+            <span class="card__eyebrow">07 / ĐỜI THƯỜNG</span>
             <h2 id="hobbies-title" class="card__title">Sở thích</h2>
           </div>
         </header>
@@ -404,11 +427,11 @@
           <div class="connect__copy">
             <div class="chip chip--status">
               <span class="chip__dot" aria-hidden="true"></span>
-              <span id="connect-status">Đang online — rủ chơi game nhé!</span>
+              <span id="connect-status">Thường online buổi tối</span>
             </div>
             <h2 id="connect-title" class="connect__title">Cùng leo rank hoặc trò chuyện nhé?</h2>
-            <p class="connect__desc">
-              Cứ thoải mái nhắn mình qua Discord, Facebook hoặc kết bạn trực tiếp bằng Riot ID để lập team buổi tối. Mọi thông tin kết nối đều sẵn sàng bên cạnh.
+            <p id="connect-desc" class="connect__desc">
+              Cứ thoải mái nhắn mình qua Discord hoặc Facebook để trò chuyện hay rủ chơi game cùng nhé. Mọi thông tin kết nối đều sẵn sàng bên cạnh.
             </p>
           </div>
 

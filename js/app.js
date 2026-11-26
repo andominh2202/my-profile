@@ -348,7 +348,7 @@
       var items = [
         { label: 'Khu vực', value: str(p.location) || 'Việt Nam' },
         { label: 'Góc game', value: gameCount > 0 ? gameCount + ' tựa game yêu thích' : 'Đang cập nhật' },
-        { label: 'Phong cách', value: str(p.tagline) || 'Game · Nhạc · Công nghệ' }
+        { label: 'Nhịp sống', value: 'Game · Nhạc · Code' }
       ];
       items.forEach(function (item) {
         var tile = el('div', 'highlight-tile');
@@ -511,11 +511,14 @@
     if (passLink) {
       if (valid.length > 0) {
         passLink.setAttribute('href', '#gamertags');
+        var passLabel = passLink.querySelector('span');
+        if (passLabel) passLabel.textContent = 'ID Ingame';
         passLink.hidden = false;
       } else {
         passLink.setAttribute('href', '#socials');
-        var passLabel = passLink.querySelector('span');
-        if (passLabel) passLabel.textContent = 'Mạng xã hội';
+        var passLabelSocial = passLink.querySelector('span');
+        if (passLabelSocial) passLabelSocial.textContent = 'Mạng xã hội';
+        passLink.hidden = false;
       }
     }
 
@@ -624,6 +627,79 @@
     });
   }
 
+  function renderProjects(list) {
+    var root = $('projects-list');
+    if (!root) return;
+    clear(root);
+
+    var valid = (list || []).filter(function (item) {
+      return item && str(item.title || item.name).trim();
+    });
+    setSectionVisible('projects', valid.length > 0);
+    if (!valid.length) return;
+
+    valid.forEach(function (item) {
+      var title = str(item.title || item.name).trim();
+      var desc = str(item.description || item.desc).trim();
+      var imgUrl = str(item.image).trim();
+      var repoUrl = safeUrl(item.repoUrl || item.codeUrl || item.github);
+      var demoUrl = safeUrl(item.demoUrl || item.url);
+      var techList = Array.isArray(item.tech || item.stack) ? (item.tech || item.stack) : [];
+
+      var card = el('article', 'project-card');
+
+      if (imgUrl) {
+        var cover = el('div', 'project-card__cover');
+        var img = document.createElement('img');
+        img.alt = title;
+        img.loading = 'lazy';
+        img.addEventListener('error', function () {
+          if (cover.parentNode === card) card.removeChild(cover);
+        }, { once: true });
+        img.src = imgUrl;
+        cover.appendChild(img);
+        card.appendChild(cover);
+      }
+
+      var body = el('div', 'project-card__body');
+      body.appendChild(el('h3', 'project-card__title', title));
+      if (desc) body.appendChild(el('p', 'project-card__desc', desc));
+
+      var cleanTech = techList.map(function (t) { return str(t).trim(); }).filter(Boolean);
+      if (cleanTech.length) {
+        var techWrap = el('div', 'project-card__tech');
+        cleanTech.forEach(function (t) {
+          techWrap.appendChild(el('span', 'project-card__tag', t));
+        });
+        body.appendChild(techWrap);
+      }
+
+      if (repoUrl || demoUrl) {
+        var links = el('div', 'project-card__links');
+        if (repoUrl) {
+          var codeLink = el('a', 'project-card__link', 'Code ↗');
+          codeLink.href = repoUrl;
+          codeLink.target = '_blank';
+          codeLink.rel = 'noopener noreferrer';
+          codeLink.setAttribute('aria-label', 'Xem mã nguồn dự án ' + title + ' (mở tab mới)');
+          links.appendChild(codeLink);
+        }
+        if (demoUrl) {
+          var demoLink = el('a', 'project-card__link project-card__link--demo', 'Demo ↗');
+          demoLink.href = demoUrl;
+          demoLink.target = '_blank';
+          demoLink.rel = 'noopener noreferrer';
+          demoLink.setAttribute('aria-label', 'Xem bản chạy thử dự án ' + title + ' (mở tab mới)');
+          links.appendChild(demoLink);
+        }
+        body.appendChild(links);
+      }
+
+      card.appendChild(body);
+      root.appendChild(card);
+    });
+  }
+
   function renderConnect(p) {
     setText('connect-status', p.status);
     var root = $('connect-actions');
@@ -634,6 +710,16 @@
     var tags = Array.isArray(p.gamerTags)
       ? p.gamerTags.filter(function (t) { return t && str(t.value).trim(); })
       : [];
+    var hasRiotId = tags.some(function (t) {
+      return str(t.platform).toLowerCase() === 'riot';
+    });
+
+    setText(
+      'connect-desc',
+      hasRiotId
+        ? 'Cứ thoải mái nhắn mình qua Discord, Facebook hoặc kết bạn trực tiếp bằng Riot ID để lập team buổi tối. Mọi thông tin kết nối đều sẵn sàng bên cạnh.'
+        : 'Cứ thoải mái nhắn mình qua Discord hoặc Facebook để trò chuyện hay rủ chơi game cùng nhé. Mọi thông tin kết nối đều sẵn sàng bên cạnh.'
+    );
 
     // 1. Copyable socials (e.g. Discord)
     socials.forEach(function (s) {
@@ -985,6 +1071,42 @@
     }
   }
 
+  /* ---------- Scroll Progress & Subtle Pointer Sheen ---------- */
+  function initScrollProgress() {
+    var bar = document.querySelector('.scroll-progress');
+    if (!bar || prefersReducedMotion()) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var ratio = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+      bar.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    update();
+  }
+
+  function initPointerLight() {
+    if (prefersReducedMotion() || !window.matchMedia) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var targets = document.querySelectorAll('.hero__card, .card--connect');
+    Array.prototype.forEach.call(targets, function (elTarget) {
+      elTarget.addEventListener('pointermove', function (ev) {
+        var rect = elTarget.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        var x = ((ev.clientX - rect.left) / rect.width) * 100;
+        var y = ((ev.clientY - rect.top) / rect.height) * 100;
+        elTarget.style.setProperty('--px', x.toFixed(1) + '%');
+        elTarget.style.setProperty('--py', y.toFixed(1) + '%');
+      }, { passive: true });
+    });
+  }
+
   /* ---------- Bootstrap ---------- */
   function init() {
     initTheme();
@@ -1023,6 +1145,7 @@
       function () { renderSocials(p.socials); },
       function () { renderMusic(p.spotify); },
       function () { renderGames(p.games); },
+      function () { renderProjects(p.projects); },
       function () { renderHobbies(p.hobbies); },
       function () { renderConnect(p); }
     ].forEach(function (fn) {
@@ -1036,6 +1159,8 @@
     initScrollSpy();
     initBackToTop();
     initReveal();
+    initScrollProgress();
+    initPointerLight();
   }
 
   if (document.readyState === 'loading') {

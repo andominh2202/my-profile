@@ -1,52 +1,58 @@
 /* ==========================================================================
-   PREMIUM PERSONAL PORTFOLIO — DESIGN SYSTEM, BENTO GRID & DUAL THEME
-   Direction: Deep Navy Foundation · Cyan / Electric Blue Accents · Bento UI
+   CINEMATIC PERSONAL PORTFOLIO — DESIGN SYSTEM, BENTO GRID & DUAL THEME
+   Direction: Midnight Navy · Electric Cyan · Royal Violet · Magenta/Amber
    ========================================================================== */
 
-/* ---------- 1. Design Tokens: Dark Mode (Default) ---------- */
+/* ---------- 1. Design Tokens: Dark Mode (Cinematic Default) ---------- */
 :root,
 [data-theme="dark"] {
   /* Surfaces & Backgrounds */
-  --bg-canvas: #080B12;
-  --bg-subtle: #0D1220;
-  --bg-surface: #111827;
-  --bg-elevated: #172033;
-  --bg-tile: rgba(23, 32, 51, 0.62);
-  --bg-tile-hover: rgba(30, 42, 68, 0.88);
+  --bg-canvas: #05070E;
+  --bg-subtle: #0A1020;
+  --bg-surface: #0F172A;
+  --bg-elevated: #162038;
+  --bg-tile: rgba(20, 29, 51, 0.64);
+  --bg-tile-hover: rgba(28, 41, 70, 0.90);
 
   /* Glassmorphism */
-  --glass-nav: rgba(13, 18, 32, 0.78);
-  --glass-card: rgba(17, 24, 39, 0.78);
-  --glass-elevated: rgba(23, 32, 51, 0.92);
-  --glass-highlight: rgba(255, 255, 255, 0.06);
+  --glass-nav: rgba(10, 16, 32, 0.78);
+  --glass-card: rgba(15, 23, 42, 0.76);
+  --glass-elevated: rgba(22, 32, 56, 0.92);
+  --glass-highlight: rgba(255, 255, 255, 0.08);
 
-  /* Brand & Accents (Cyan / Electric Sky / Indigo) */
+  /* Brand & Cinematic Accents */
   --accent-primary: #38BDF8;
   --accent-secondary: #818CF8;
   --accent-cyan: #22D3EE;
-  --accent-text: #38BDF8;          /* >= 7.5:1 AAA on dark surfaces */
-  --accent-cyan-text: #22D3EE;     /* >= 9.0:1 AAA on dark surfaces */
+  --accent-violet: #A78BFA;
+  --accent-magenta: #F472B6;
+  --accent-amber: #FB923C;
+  --accent-text: #38BDF8;
+  --accent-cyan-text: #22D3EE;
   --accent-soft: rgba(56, 189, 248, 0.12);
-  --accent-soft-hover: rgba(56, 189, 248, 0.18);
+  --accent-soft-hover: rgba(56, 189, 248, 0.20);
   --accent-border: rgba(56, 189, 248, 0.28);
 
   /* Gradients */
-  --grad-brand: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
-  --grad-cta: linear-gradient(135deg, #38BDF8 0%, #22D3EE 100%);
-  --grad-cta-hover: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 100%);
-  --grad-connect: radial-gradient(90% 120% at 0% 0%, rgba(56, 189, 248, 0.14), transparent 60%),
-                  radial-gradient(80% 100% at 100% 100%, rgba(129, 140, 248, 0.12), transparent 60%);
+  --grad-brand: linear-gradient(135deg, #22D3EE 0%, #818CF8 55%, #F472B6 100%);
+  --grad-cta: linear-gradient(135deg, #38BDF8 0%, #22D3EE 52%, #818CF8 100%);
+  --grad-cta-hover: linear-gradient(135deg, #7DD3FC 0%, #38BDF8 50%, #A78BFA 100%);
+  --grad-hero-name: linear-gradient(110deg, #F8FAFC 18%, #BAE6FD 58%, #DDD6FE 92%);
+  --grad-connect:
+    radial-gradient(65% 90% at var(--px, 15%) var(--py, 20%), rgba(56, 189, 248, 0.16), transparent 62%),
+    radial-gradient(70% 90% at 90% 90%, rgba(167, 139, 250, 0.15), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(244, 114, 182, 0.08), transparent 65%);
 
   /* Typography Ink (WCAG AA/AAA Verified) */
-  --text-primary: #F1F5F9;         /* 16.9:1 */
-  --text-secondary: #CBD5E1;       /* 11.5:1 */
-  --text-muted: #94A3B8;           /* 6.34:1+ on all dark surfaces */
-  --text-on-accent: #080B12;       /* 9.19:1 on #38BDF8 */
+  --text-primary: #F1F5F9;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-on-accent: #05070E;
 
   /* Borders & Focus */
   --border-subtle: rgba(148, 163, 184, 0.10);
-  --border-default: rgba(148, 163, 184, 0.15);
-  --border-strong: rgba(56, 189, 248, 0.42);
+  --border-default: rgba(148, 163, 184, 0.16);
+  --border-strong: rgba(56, 189, 248, 0.44);
   --focus-ring: #38BDF8;
 
   /* Status & Feedback */
@@ -56,37 +62,39 @@
   --status-border: rgba(16, 185, 129, 0.28);
 
   /* Ambient Backdrop & Cover Blend */
-  --wash-primary: rgba(56, 189, 248, 0.10);
-  --wash-secondary: rgba(129, 140, 248, 0.08);
+  --aurora-cyan: rgba(34, 211, 238, 0.15);
+  --aurora-violet: rgba(167, 139, 250, 0.14);
+  --aurora-warm: rgba(244, 114, 182, 0.08);
   --grid-line: rgba(148, 163, 184, 0.045);
-  --cover-shade: linear-gradient(180deg, rgba(8, 11, 18, 0.05) 35%, rgba(17, 24, 39, 0.88) 100%);
+  --noise-opacity: 0.03;
+  --cover-shade: linear-gradient(180deg, rgba(5, 7, 14, 0.06) 30%, rgba(15, 23, 42, 0.90) 100%);
 
   /* Elevation Shadows */
-  --shadow-sm: 0 2px 10px -2px rgba(2, 6, 23, 0.55);
-  --shadow-md: 0 14px 34px -10px rgba(2, 6, 23, 0.68);
-  --shadow-lg: 0 22px 46px -12px rgba(2, 6, 23, 0.82), 0 0 24px -6px rgba(56, 189, 248, 0.18);
-  --shadow-glow: 0 8px 24px -6px rgba(56, 189, 248, 0.34);
+  --shadow-sm: 0 2px 10px -2px rgba(2, 6, 23, 0.6);
+  --shadow-md: 0 16px 38px -12px rgba(2, 6, 23, 0.75);
+  --shadow-lg: 0 24px 54px -14px rgba(2, 6, 23, 0.88), 0 0 28px -6px rgba(56, 189, 248, 0.20);
+  --shadow-glow: 0 10px 28px -6px rgba(56, 189, 248, 0.36), 0 0 20px -8px rgba(167, 139, 250, 0.28);
 
   /* Platform Brand Accents (Dark Mode Optimized) */
   --brand-github: #E2E8F0;
-  --brand-github-ink: #080B12;
+  --brand-github-ink: #05070E;
   --brand-discord: #818CF8;
-  --brand-discord-ink: #080B12;
+  --brand-discord-ink: #05070E;
   --brand-facebook: #38BDF8;
-  --brand-facebook-ink: #080B12;
+  --brand-facebook-ink: #05070E;
   --brand-instagram: #F472B6;
-  --brand-instagram-ink: #080B12;
+  --brand-instagram-ink: #05070E;
   --brand-tiktok: #22D3EE;
-  --brand-tiktok-ink: #080B12;
+  --brand-tiktok-ink: #05070E;
   --brand-spotify: #34D399;
-  --brand-spotify-ink: #080B12;
+  --brand-spotify-ink: #05070E;
   --brand-riot: #FB7185;
   --brand-minecraft: #4ADE80;
 
   color-scheme: dark;
 }
 
-/* ---------- 2. Design Tokens: Light Mode (Intentionally Engineered) ---------- */
+/* ---------- 2. Design Tokens: Light Mode (Cinematic Daylight) ---------- */
 [data-theme="light"] {
   /* Surfaces & Backgrounds */
   --bg-canvas: #F8FAFC;
@@ -98,32 +106,38 @@
 
   /* Glassmorphism */
   --glass-nav: rgba(255, 255, 255, 0.84);
-  --glass-card: rgba(255, 255, 255, 0.92);
+  --glass-card: rgba(255, 255, 255, 0.90);
   --glass-elevated: rgba(255, 255, 255, 0.96);
-  --glass-highlight: rgba(255, 255, 255, 0.95);
+  --glass-highlight: rgba(255, 255, 255, 0.96);
 
   /* Brand & Accents (WCAG AA Contrast Verified >= 4.5:1) */
   --accent-primary: #0284C7;
   --accent-secondary: #6366F1;
   --accent-cyan: #0891B2;
-  --accent-text: #0369A1;          /* 5.93:1 on #FFF, 5.39:1 on #F1F5F9 */
-  --accent-cyan-text: #0E7490;     /* 5.36:1 on #FFF */
+  --accent-violet: #7C3AED;
+  --accent-magenta: #DB2777;
+  --accent-amber: #D97706;
+  --accent-text: #0369A1;
+  --accent-cyan-text: #0E7490;
   --accent-soft: rgba(2, 132, 199, 0.08);
   --accent-soft-hover: rgba(2, 132, 199, 0.14);
   --accent-border: rgba(2, 132, 199, 0.24);
 
   /* Gradients */
-  --grad-brand: linear-gradient(135deg, #0284C7 0%, #6366F1 100%);
-  --grad-cta: linear-gradient(135deg, #0369A1 0%, #075985 100%);
-  --grad-cta-hover: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-  --grad-connect: radial-gradient(90% 120% at 0% 0%, rgba(2, 132, 199, 0.08), transparent 60%),
-                  radial-gradient(80% 100% at 100% 100%, rgba(99, 102, 241, 0.07), transparent 60%);
+  --grad-brand: linear-gradient(135deg, #0284C7 0%, #6366F1 60%, #DB2777 100%);
+  --grad-cta: linear-gradient(135deg, #0369A1 0%, #0284C7 55%, #4F46E5 100%);
+  --grad-cta-hover: linear-gradient(135deg, #0284C7 0%, #0369A1 55%, #4338CA 100%);
+  --grad-hero-name: linear-gradient(110deg, #0F172A 20%, #0369A1 65%, #4338CA 95%);
+  --grad-connect:
+    radial-gradient(65% 90% at var(--px, 15%) var(--py, 20%), rgba(2, 132, 199, 0.09), transparent 62%),
+    radial-gradient(70% 90% at 90% 90%, rgba(124, 58, 237, 0.08), transparent 60%),
+    radial-gradient(50% 60% at 50% 100%, rgba(219, 39, 119, 0.05), transparent 65%);
 
   /* Typography Ink (WCAG AA/AAA Verified) */
-  --text-primary: #0F172A;         /* 17.06:1 */
-  --text-secondary: #334155;       /* 9.54:1+ */
-  --text-muted: #475569;           /* 6.92:1+ on #F1F5F9 & #FFF */
-  --text-on-accent: #FFFFFF;       /* >= 5.93:1 on --grad-cta */
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --text-on-accent: #FFFFFF;
 
   /* Borders & Focus */
   --border-subtle: #EDF2F7;
@@ -133,21 +147,23 @@
 
   /* Status & Feedback */
   --status-dot: #10B981;
-  --status-text: #065F46;          /* 6.7:1+ AA */
+  --status-text: #065F46;
   --status-bg: rgba(16, 185, 129, 0.10);
   --status-border: rgba(5, 150, 105, 0.28);
 
   /* Ambient Backdrop & Cover Blend */
-  --wash-primary: rgba(2, 132, 199, 0.07);
-  --wash-secondary: rgba(99, 102, 241, 0.06);
+  --aurora-cyan: rgba(2, 132, 199, 0.09);
+  --aurora-violet: rgba(124, 58, 237, 0.07);
+  --aurora-warm: rgba(219, 39, 119, 0.045);
   --grid-line: rgba(15, 23, 42, 0.035);
-  --cover-shade: linear-gradient(180deg, rgba(8, 11, 18, 0) 45%, rgba(8, 11, 18, 0.55) 100%);
+  --noise-opacity: 0.015;
+  --cover-shade: linear-gradient(180deg, rgba(5, 7, 14, 0) 45%, rgba(5, 7, 14, 0.58) 100%);
 
   /* Elevation Shadows */
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
-  --shadow-md: 0 10px 28px -8px rgba(15, 23, 42, 0.07), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 18px 38px -10px rgba(15, 23, 42, 0.11), 0 4px 12px -2px rgba(2, 132, 199, 0.08);
-  --shadow-glow: 0 8px 22px -6px rgba(3, 105, 161, 0.28);
+  --shadow-md: 0 12px 30px -8px rgba(15, 23, 42, 0.07), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 20px 42px -12px rgba(15, 23, 42, 0.12), 0 4px 14px -2px rgba(2, 132, 199, 0.09);
+  --shadow-glow: 0 10px 24px -6px rgba(3, 105, 161, 0.28);
 
   /* Platform Brand Accents (Light Mode Legibility Optimized) */
   --brand-github: #24292F;
@@ -359,7 +375,7 @@ button {
   transform: translate3d(0, 0, 0);
 }
 
-/* ---------- 5. Static GPU-Friendly Ambient Backdrop ---------- */
+/* ---------- 5. Multi-Layer Cinematic Backdrop & Scroll Progress ---------- */
 .bg-fx {
   position: fixed;
   inset: 0;
@@ -368,25 +384,46 @@ button {
   pointer-events: none;
 }
 
-.bg-fx__wash {
+.bg-fx__aurora {
   position: absolute;
   border-radius: 50%;
+  will-change: transform;
 }
 
-.bg-fx__wash--primary {
-  top: -22vh;
-  right: -10vw;
-  width: 65vw;
-  height: 65vh;
-  background: radial-gradient(circle, var(--wash-primary) 0%, transparent 70%);
+.bg-fx__aurora--cyan {
+  top: -24vh;
+  right: -12vw;
+  width: 68vw;
+  height: 68vh;
+  background: radial-gradient(circle, var(--aurora-cyan) 0%, transparent 68%);
+  animation: aurora-drift-a 26s ease-in-out infinite alternate;
 }
 
-.bg-fx__wash--secondary {
+.bg-fx__aurora--violet {
+  top: 28vh;
+  left: -18vw;
+  width: 64vw;
+  height: 64vh;
+  background: radial-gradient(circle, var(--aurora-violet) 0%, transparent 68%);
+  animation: aurora-drift-b 32s ease-in-out infinite alternate;
+}
+
+.bg-fx__aurora--warm {
   bottom: -24vh;
-  left: -12vw;
-  width: 60vw;
-  height: 60vh;
-  background: radial-gradient(circle, var(--wash-secondary) 0%, transparent 70%);
+  right: 14vw;
+  width: 52vw;
+  height: 52vh;
+  background: radial-gradient(circle, var(--aurora-warm) 0%, transparent 68%);
+}
+
+@keyframes aurora-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-4vw, 3vh, 0) scale(1.06); }
+}
+
+@keyframes aurora-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(4vw, -4vh, 0) scale(1.08); }
 }
 
 .bg-fx__grid {
@@ -396,8 +433,28 @@ button {
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 20%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 85% 60% at 50% 0%, #000 20%, transparent 82%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 60% at 50% 0%, #000 20%, transparent 82%);
+}
+
+.bg-fx__noise {
+  position: absolute;
+  inset: 0;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: calc(var(--z-header) + 10);
+  background: var(--grad-brand);
+  transform-origin: left center;
+  transform: scaleX(0);
+  pointer-events: none;
 }
 
 /* ---------- 6. Sticky Floating Navigation & Drawer ---------- */
@@ -821,16 +878,20 @@ button {
 }
 
 .hero__content {
+  position: relative;
   grid-column: span 7;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(24px, 3.2vw, 40px);
+  padding: clamp(26px, 3.4vw, 44px);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-default);
-  background: var(--glass-card);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background:
+    radial-gradient(80% 70% at 0% 0%, rgba(56, 189, 248, 0.10), transparent 65%),
+    radial-gradient(60% 60% at 100% 100%, rgba(167, 139, 250, 0.08), transparent 65%),
+    var(--glass-card);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
   animation: enter-up var(--dur-reveal) var(--ease-reveal) 40ms both;
 }
@@ -868,11 +929,14 @@ button {
 
 .hero__name {
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 1.6rem + 2.1vw, 3rem);
+  font-size: clamp(2.25rem, 1.75rem + 2.4vw, 3.4rem);
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  color: var(--text-primary);
+  line-height: 1.18;
+  letter-spacing: -0.028em;
+  background: var(--grad-hero-name);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   overflow-wrap: anywhere;
 }
 
@@ -969,10 +1033,29 @@ button {
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-default);
   background: var(--glass-card);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
   box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-highlight);
   overflow: hidden;
+  transition: border-color var(--dur-hover) var(--ease-out);
+}
+
+.hero__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(360px circle at var(--px, 50%) var(--py, 30%), rgba(56, 189, 248, 0.14), transparent 65%);
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease-out);
+}
+
+.hero__card:hover {
+  border-color: var(--border-strong);
+}
+
+.hero__card:hover::after {
+  opacity: 1;
 }
 
 .hero__cover {
@@ -1121,8 +1204,27 @@ button {
 .card--socials   { grid-column: span 5; }
 .card--music     { grid-column: span 7; }
 .card--games     { grid-column: span 12; }
+.card--projects  { grid-column: span 12; }
 .card--hobbies   { grid-column: span 12; }
 .card--connect   { grid-column: span 12; }
+
+/* Section-Specific Ambient Rhythm */
+.card--about {
+  background-image: radial-gradient(85% 90% at 0% 0%, rgba(56, 189, 248, 0.07), transparent 60%);
+}
+.card--socials {
+  background-image: radial-gradient(85% 90% at 100% 0%, rgba(129, 140, 248, 0.08), transparent 60%);
+}
+.card--music {
+  background-image: radial-gradient(85% 90% at 100% 0%, rgba(16, 185, 129, 0.07), transparent 60%);
+}
+.card--games {
+  background-image: radial-gradient(80% 90% at 0% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
+                    radial-gradient(60% 70% at 100% 100%, rgba(34, 211, 238, 0.06), transparent 55%);
+}
+.card--projects {
+  background-image: radial-gradient(80% 90% at 100% 0%, rgba(56, 189, 248, 0.08), transparent 55%);
+}
 
 /* Tự động giãn toàn hàng nếu thẻ ghép cặp đang ẩn do chưa có dữ liệu */
 .card--about:has(+ .card--gamertags[hidden]) { grid-column: span 12; }
@@ -1817,6 +1919,141 @@ button {
   color: var(--text-secondary);
 }
 
+/* ---------- 14b. Section: Projects (Adaptive 12-Col Grid) ---------- */
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-default);
+  background: var(--bg-tile);
+  overflow: hidden;
+  transition:
+    transform var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.project-card:first-child:last-child {
+  grid-column: span 12;
+}
+
+.project-card:first-child:nth-last-child(2),
+.project-card:first-child:nth-last-child(2) ~ .project-card {
+  grid-column: span 6;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  background: var(--bg-tile-hover);
+  border-color: var(--border-strong);
+}
+
+.project-card__cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.project-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-theme) var(--ease-out);
+}
+
+.project-card__body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.project-card__title {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.project-card__desc {
+  font-size: 0.89rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.project-card__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.project-card__tag {
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.project-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out),
+    color var(--dur-micro) var(--ease-out);
+}
+
+.project-card__link:hover {
+  background: var(--accent-soft);
+  border-color: var(--border-strong);
+  color: var(--accent-text);
+}
+
+.project-card__link--demo {
+  background: var(--grad-cta);
+  border-color: transparent;
+  color: var(--text-on-accent);
+}
+
+.project-card__link--demo:hover {
+  background: var(--grad-cta-hover);
+  color: var(--text-on-accent);
+}
+
 /* ---------- 15. Section: Hobbies (Explicit 4x3 Grid — Zero Orphan Gap) ---------- */
 .hobbies-list {
   display: grid;
@@ -1984,11 +2221,13 @@ button {
   }
   .social-card:hover,
   .game-card:hover,
+  .project-card:hover,
   .hobby-card:hover,
   .connect-btn:hover {
     transform: translate3d(0, -3px, 0);
   }
-  .game-card:hover .game-card__cover img {
+  .game-card:hover .game-card__cover img,
+  .project-card:hover .project-card__cover img {
     transform: scale(1.035);
   }
   .hobby-card:hover .hobby-card__icon {
@@ -2017,8 +2256,21 @@ button {
 
 /* ---------- 19. Minimal Footer ---------- */
 .site-footer {
+  position: relative;
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-subtle);
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-violet), transparent);
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .site-footer__inner {
@@ -2226,6 +2478,15 @@ button {
     grid-column: span 6;
   }
 
+  .project-card,
+  .project-card:first-child:nth-last-child(2),
+  .project-card:first-child:nth-last-child(2) ~ .project-card {
+    grid-column: span 6;
+  }
+  .project-card:first-child:nth-last-child(odd) {
+    grid-column: span 12;
+  }
+
   /* Connect Split Stacks */
   .connect__copy,
   .connect__actions {
@@ -2327,6 +2588,11 @@ button {
     gap: 14px;
     padding: 16px;
   }
+  .project-card,
+  .project-card:first-child:nth-last-child(2),
+  .project-card:first-child:nth-last-child(2) ~ .project-card {
+    grid-column: span 12;
+  }
   .hobby-card__icon {
     margin-bottom: 0;
   }
@@ -2422,9 +2688,14 @@ button {
   .hero__content,
   .hero__visual,
   .nav__drawer,
+  .bg-fx__aurora--cyan,
+  .bg-fx__aurora--violet,
   .chip__dot::after,
   .skeleton {
     animation: none !important;
+  }
+  .scroll-progress {
+    display: none !important;
   }
   .js .reveal:not(.is-revealed) {
     opacity: 1 !important;
@@ -2444,6 +2715,9 @@ button {
   .social-card__icon,
   .game-card,
   .game-card__cover img,
+  .project-card,
+  .project-card__cover img,
+  .project-card__link,
   .hobby-card,
   .hobby-card__icon,
   .connect-btn,

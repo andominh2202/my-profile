@@ -12,7 +12,8 @@
  *     https://open.spotify.com/playlist/XXXX?si=...).
  *  5. games: "image" là tuỳ chọn (vd 'assets/valorant.jpg');
  *     bỏ trống thì hiển thị chữ cái đầu tên game.
- *  6. Lưu file rồi tải lại index.html là xong.
+ *  6. projects: mảng dự án cá nhân (để [] nếu chưa muốn hiện).
+ *  7. Lưu file rồi tải lại index.html là xong.
  * ============================================================
  */
 window.PROFILE = {
@@ -25,7 +26,7 @@ window.PROFILE = {
   avatar: 'assets/avatar.svg',
   cover: 'assets/cover.svg',
   location: 'Việt Nam', // TODO: thay bằng của bạn
-  status: 'Đang online — rủ chơi game nhé!', // TODO: thay bằng của bạn
+  status: 'Thường online buổi tối', // TODO: thay bằng của bạn
 
   socials: [
     { id: 'github', label: 'GitHub', handle: 'andominh2202', url: 'https://github.com/andominh2202' }, // TODO: thay bằng của bạn
@@ -57,5 +58,17 @@ window.PROFILE = {
     { icon: '🎮', title: 'Chơi game', desc: 'FPS, MOBA và những tựa game sinh tồn cùng bạn bè.' }, // TODO
     { icon: '💻', title: 'Code', desc: 'Mày mò làm web và mấy công cụ nhỏ cho vui.' }, // TODO
     { icon: '📸', title: 'Chụp ảnh', desc: 'Lưu lại khoảnh khắc đẹp trên mỗi chuyến đi.' } // TODO
+  ],
+
+  projects: [
+    // Ví dụ (bỏ comment để hiển thị mục Dự án):
+    // {
+    //   title: 'My Profile',
+    //   description: 'Trang hồ sơ cá nhân tĩnh dùng HTML, CSS, JS thuần với Bento Grid và Dark/Light Mode.',
+    //   tech: ['HTML5', 'CSS3', 'JavaScript'],
+    //   image: '', // tùy chọn (vd: 'assets/project-1.png')
+    //   repoUrl: 'https://github.com/andominh2202/my-profile', // tùy chọn
+    //   demoUrl: 'https://andominh2202.github.io/my-profile/'   // tùy chọn
+    // }
   ]
 };
