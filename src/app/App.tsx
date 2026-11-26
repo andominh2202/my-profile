@@ -19,7 +19,6 @@ import { ConnectSection } from '../components/contact/ConnectSection';
 import { Footer } from '../components/common/Footer';
 import { Toast } from '../components/common/Toast';
 import { Preloader } from '../components/effects/Preloader';
-import { CursorRing } from '../components/effects/CursorRing';
 
 const AuroraScene = lazy(() =>
   import('../scenes/AuroraScene').then((m) => ({ default: m.AuroraScene }))
@@ -257,7 +256,6 @@ export function App() {
         onBackToTop={() => scrollToSection('top')}
       />
 
-      <CursorRing quality={quality} />
       <Toast message={toastMsg} />
     </>
   );
