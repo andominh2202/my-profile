@@ -204,3 +204,36 @@
     --grid-gap: 24px;
   }
 }
+
+/* Theme Variations */
+[data-aurora-theme="midnight"] {
+  --bg-canvas: #04070F;
+  --bg-subtle: #081020;
+  --accent-cyan: #38BDF8;
+  --accent-violet: #6366F1;
+  --aurora-cyan: rgba(56, 189, 248, 0.10);
+  --aurora-violet: rgba(99, 102, 241, 0.10);
+}
+
+[data-aurora-theme="cyber"] {
+  --accent-cyan: #00F0FF;
+  --accent-violet: #A855F7;
+  --border-strong: rgba(0, 240, 255, 0.55);
+  --aurora-cyan: rgba(0, 240, 255, 0.18);
+  --aurora-violet: rgba(168, 85, 247, 0.18);
+}
+
+/* Accessibility Overrides */
+.a11y-large-text { font-size: 112.5%; }
+.a11y-high-contrast {
+  --border-default: rgba(139, 245, 255, 0.36);
+  --text-secondary: #F4FAFF;
+}
+.a11y-simplify .bg-fx__canvas,
+.a11y-simplify .bg-fx__aurora { display: none !important; }
+.a11y-reduce-motion *,
+.a11y-reduce-motion *::before,
+.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}

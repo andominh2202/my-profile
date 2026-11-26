@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Star } from 'lucide-react';
 import type { GameItem, QualityLevel } from '../../types/profile';
 
@@ -49,6 +49,21 @@ function GameCard({ game, index, quality }: { game: GameItem; index: number; qua
 }
 
 export function GamesSection({ games, quality }: GamesSectionProps) {
+  const [activeGenre, setActiveGenre] = useState('Tất cả');
+
+  const genres = useMemo(() => {
+    const set = new Set<string>();
+    games.forEach((g) => {
+      if (g.genre.trim()) set.add(g.genre.trim());
+    });
+    return ['Tất cả', ...Array.from(set)];
+  }, [games]);
+
+  const filtered = useMemo(() => {
+    if (activeGenre === 'Tất cả') return games;
+    return games.filter((g) => g.genre.trim() === activeGenre);
+  }, [games, activeGenre]);
+
   if (!games.length) return null;
 
   return (
@@ -62,8 +77,24 @@ export function GamesSection({ games, quality }: GamesSectionProps) {
           <h2 id="games-title" className="card__title">Game yêu thích</h2>
         </div>
       </header>
+
+      <div className="filter-bar" role="tablist" aria-label="Lọc theo thể loại game">
+        {genres.map((genre) => (
+          <button
+            key={genre}
+            type="button"
+            role="tab"
+            aria-selected={activeGenre === genre}
+            className={`filter-pill${activeGenre === genre ? ' is-active' : ''}`}
+            onClick={() => setActiveGenre(genre)}
+          >
+            {genre}
+          </button>
+        ))}
+      </div>
+
       <div className="games-list">
-        {games.map((game, idx) => (
+        {filtered.map((game, idx) => (
           <GameCard key={game.title} game={game} index={idx} quality={quality} />
         ))}
       </div>

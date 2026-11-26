@@ -19,6 +19,9 @@ import { ConnectSection } from '../components/contact/ConnectSection';
 import { Footer } from '../components/common/Footer';
 import { Toast } from '../components/common/Toast';
 import { Preloader } from '../components/effects/Preloader';
+import { CommandPalette } from '../components/common/CommandPalette';
+import { DevTerminal } from '../components/terminal/DevTerminal';
+import { useA11ySettings } from '../hooks/useA11ySettings';
 
 const AuroraScene = lazy(() =>
   import('../scenes/AuroraScene').then((m) => ({ default: m.AuroraScene }))
@@ -34,11 +37,16 @@ function getInitials(name: string): string {
 }
 
 export function App() {
-  const { theme, toggleTheme } = useTheme();
-  const quality = useQualityLevel();
+  const { theme, setTheme, cycleTheme } = useTheme();
+  const { settings: a11y } = useA11ySettings();
+  const detectedQuality = useQualityLevel();
+  const quality = a11y.reduceMotion || a11y.simplifyEffects ? 'low' : detectedQuality;
+  const themeMode = theme === 'polar' ? 'light' : 'dark';
   const [activeId, setActiveId] = useState('about');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState('');
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [termOpen, setTermOpen] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
   const progressRef = useRef<HTMLDivElement | null>(null);
   const toastTimerRef = useRef<number | null>(null);
@@ -172,6 +180,18 @@ export function App() {
     };
   }, [quality]);
 
+  // Global Ctrl+K / Cmd+K shortcut for Command Palette
+  useEffect(() => {
+    const onKey = (ev: KeyboardEvent) => {
+      if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 'k') {
+        ev.preventDefault();
+        setCmdOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   // Scrollspy
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return;
@@ -207,7 +227,7 @@ export function App() {
           </div>
         }
       >
-        <AuroraScene quality={quality} theme={theme} />
+        <AuroraScene quality={quality} theme={themeMode} />
       </Suspense>
 
       <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
@@ -218,7 +238,9 @@ export function App() {
         items={navItems}
         activeId={activeId}
         theme={theme}
-        onToggleTheme={toggleTheme}
+        onToggleTheme={cycleTheme}
+        onOpenCommand={() => setCmdOpen(true)}
+        onOpenTerminal={() => setTermOpen(true)}
         onNavigate={scrollToSection}
       />
 
@@ -236,7 +258,7 @@ export function App() {
           <AboutSection profile={PROFILE} />
           <GamerTagsSection tags={validTags} copiedKey={copiedKey} onCopy={handleCopy} />
           <SocialsSection socials={PROFILE.socials} copiedKey={copiedKey} onCopy={handleCopy} />
-          <MusicSection playlistUrl={PROFILE.spotify.playlistUrl} theme={theme} />
+          <MusicSection playlistUrl={PROFILE.spotify.playlistUrl} theme={themeMode} />
           <GamesSection games={PROFILE.games} quality={quality} />
           <ProjectsSection projects={validProjects} />
           <HobbiesSection hobbies={PROFILE.hobbies} />
@@ -256,6 +278,15 @@ export function App() {
         onBackToTop={() => scrollToSection('top')}
       />
 
+      <CommandPalette
+        open={cmdOpen}
+        onClose={() => setCmdOpen(false)}
+        onNavigate={scrollToSection}
+        onSetTheme={setTheme}
+        onCopy={handleCopy}
+        onOpenTerminal={() => setTermOpen(true)}
+      />
+      <DevTerminal open={termOpen} onClose={() => setTermOpen(false)} />
       <Toast message={toastMsg} />
     </>
   );

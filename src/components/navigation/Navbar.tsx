@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Moon, Sun } from 'lucide-react';
-import type { ThemeMode } from '../../types/profile';
+import { Command, Moon, Sun, Terminal } from 'lucide-react';
+import type { AuroraTheme } from '../../hooks/useTheme';
 
 export interface NavItem {
   id: string;
@@ -13,8 +13,10 @@ interface NavbarProps {
   initials: string;
   items: NavItem[];
   activeId: string;
-  theme: ThemeMode;
+  theme: AuroraTheme;
   onToggleTheme: () => void;
+  onOpenCommand: () => void;
+  onOpenTerminal: () => void;
   onNavigate: (id: string) => void;
 }
 
@@ -25,6 +27,8 @@ export function Navbar({
   activeId,
   theme,
   onToggleTheme,
+  onOpenCommand,
+  onOpenTerminal,
   onNavigate
 }: NavbarProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -100,15 +104,35 @@ export function Navbar({
 
           <div className="nav__actions">
             <button
+              className="icon-btn"
+              type="button"
+              onClick={onOpenCommand}
+              aria-label="Mở bảng lệnh nhanh (Ctrl+K)"
+              title="Bảng lệnh nhanh (Ctrl+K)"
+            >
+              <Command size={18} aria-hidden="true" />
+            </button>
+
+            <button
+              className="icon-btn"
+              type="button"
+              onClick={onOpenTerminal}
+              aria-label="Mở Developer Terminal"
+              title="Developer Terminal"
+            >
+              <Terminal size={18} aria-hidden="true" />
+            </button>
+
+            <button
               id="theme-toggle"
               className="icon-btn theme-toggle"
               type="button"
               onClick={onToggleTheme}
-              aria-pressed={theme === 'light'}
-              aria-label={theme === 'light' ? 'Chuyển sang giao diện tối' : 'Chuyển sang giao diện sáng'}
-              title="Đổi giao diện Sáng / Tối"
+              aria-pressed={theme === 'polar'}
+              aria-label={`Đổi giao diện (hiện tại: ${theme})`}
+              title="Đổi giao diện (Aurora / Midnight / Cyber / Polar Light)"
             >
-              {theme === 'light' ? <Sun size={19} aria-hidden="true" /> : <Moon size={19} aria-hidden="true" />}
+              {theme === 'polar' ? <Sun size={19} aria-hidden="true" /> : <Moon size={19} aria-hidden="true" />}
             </button>
 
             <a
