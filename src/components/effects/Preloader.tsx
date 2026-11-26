@@ -14,6 +14,15 @@ export function Preloader() {
   });
   const [pct, setPct] = useState(35);
 
+  const dismiss = () => {
+    try {
+      sessionStorage.setItem('nope_intro_seen', '1');
+    } catch {
+      // Ignore
+    }
+    setDone(true);
+  };
+
   useEffect(() => {
     if (done) return;
     let cancelled = false;
@@ -48,7 +57,7 @@ export function Preloader() {
   }, [done]);
 
   return (
-    <div className={`preloader${done ? ' is-done' : ''}`} aria-hidden="true">
+    <div className={`preloader${done ? ' is-done' : ''}`} aria-hidden={done}>
       <div className="preloader__inner">
         <div className="preloader__brand">
           <span className="preloader__dot" />
@@ -58,6 +67,16 @@ export function Preloader() {
           <span className="preloader__fill" style={{ transform: `scaleX(${(pct / 100).toFixed(2)})` }} />
         </div>
         <span className="preloader__pct">{pct}%</span>
+        {!done && (
+          <button
+            type="button"
+            className="filter-pill"
+            style={{ marginTop: '8px', minHeight: '34px', fontSize: '0.75rem' }}
+            onClick={dismiss}
+          >
+            Bỏ qua
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,18 @@
 import { SlidersHorizontal, X } from 'lucide-react';
 import type { A11ySettings } from '../../hooks/useA11ySettings';
+import { THEME_OPTIONS, type AuroraTheme } from '../../hooks/useTheme';
+import type { QualityLevel } from '../../types/profile';
+
+export type QualityPreference = 'auto' | QualityLevel;
 
 interface A11yPanelProps {
   open: boolean;
   settings: A11ySettings;
+  theme: AuroraTheme;
+  qualityPref: QualityPreference;
   onToggle: (key: keyof A11ySettings) => void;
+  onSetTheme: (t: AuroraTheme) => void;
+  onSetQuality: (q: QualityPreference) => void;
   onClose: () => void;
 }
 
@@ -15,7 +23,23 @@ const OPTIONS: { key: keyof A11ySettings; label: string; desc: string }[] = [
   { key: 'simplifyEffects', label: 'Giảm hiệu ứng nền', desc: 'Tắt WebGL Aurora và lớp ánh sáng nền.' }
 ];
 
-export function A11yPanel({ open, settings, onToggle, onClose }: A11yPanelProps) {
+const QUALITY_OPTIONS: { id: QualityPreference; label: string }[] = [
+  { id: 'auto', label: 'Tự động' },
+  { id: 'high', label: 'Cao' },
+  { id: 'medium', label: 'Trung bình' },
+  { id: 'low', label: 'Nhẹ' }
+];
+
+export function A11yPanel({
+  open,
+  settings,
+  theme,
+  qualityPref,
+  onToggle,
+  onSetTheme,
+  onSetQuality,
+  onClose
+}: A11yPanelProps) {
   if (!open) return null;
 
   return (
@@ -23,7 +47,7 @@ export function A11yPanel({ open, settings, onToggle, onClose }: A11yPanelProps)
       className="cmd-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label="Cài đặt trợ năng"
+      aria-label="Cài đặt hiển thị và trợ năng"
       onClick={onClose}
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
@@ -36,14 +60,49 @@ export function A11yPanel({ open, settings, onToggle, onClose }: A11yPanelProps)
         <div className="term-head">
           <span className="term-title">
             <SlidersHorizontal size={16} aria-hidden="true" />
-            <span>Trợ năng &amp; Hiển thị</span>
+            <span>Trợ năng, Giao diện &amp; Chất lượng</span>
           </span>
-          <button type="button" className="cmd-close" onClick={onClose} aria-label="Đóng cài đặt trợ năng">
+          <button type="button" className="cmd-close" onClick={onClose} aria-label="Đóng cài đặt">
             <X size={16} />
           </button>
         </div>
 
-        <div className="cmd-list" style={{ padding: '12px 16px', gap: '10px' }}>
+        <div className="cmd-list" style={{ padding: '14px 16px', gap: '12px', maxHeight: '70vh' }}>
+          <div>
+            <div className="cmd-group" style={{ marginBottom: '8px' }}>CHỦ ĐỀ GIAO DIỆN</div>
+            <div className="filter-bar" style={{ marginBottom: 0 }}>
+              {THEME_OPTIONS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  aria-pressed={theme === t.id}
+                  className={`filter-pill${theme === t.id ? ' is-active' : ''}`}
+                  onClick={() => onSetTheme(t.id)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="cmd-group" style={{ marginBottom: '8px' }}>CHẤT LƯỢNG ĐỒ HỌA (WEBGL)</div>
+            <div className="filter-bar" style={{ marginBottom: 0 }}>
+              {QUALITY_OPTIONS.map((q) => (
+                <button
+                  key={q.id}
+                  type="button"
+                  aria-pressed={qualityPref === q.id}
+                  className={`filter-pill${qualityPref === q.id ? ' is-active' : ''}`}
+                  onClick={() => onSetQuality(q.id)}
+                >
+                  {q.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="cmd-group" style={{ marginTop: '4px' }}>TRỢ NĂNG</div>
           {OPTIONS.map((opt) => {
             const active = settings[opt.key];
             return (

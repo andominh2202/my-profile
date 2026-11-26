@@ -21,7 +21,7 @@ import { Toast } from '../components/common/Toast';
 import { Preloader } from '../components/effects/Preloader';
 import { CommandPalette } from '../components/common/CommandPalette';
 import { DevTerminal } from '../components/terminal/DevTerminal';
-import { A11yPanel } from '../components/common/A11yPanel';
+import { A11yPanel, type QualityPreference } from '../components/common/A11yPanel';
 import { useA11ySettings } from '../hooks/useA11ySettings';
 
 const AuroraScene = lazy(() =>
@@ -41,7 +41,9 @@ export function App() {
   const { theme, setTheme, cycleTheme } = useTheme();
   const { settings: a11y, toggleSetting } = useA11ySettings();
   const detectedQuality = useQualityLevel();
-  const quality = a11y.reduceMotion || a11y.simplifyEffects ? 'low' : detectedQuality;
+  const [qualityPref, setQualityPref] = useState<QualityPreference>('auto');
+  const resolvedQuality = qualityPref === 'auto' ? detectedQuality : qualityPref;
+  const quality = a11y.reduceMotion || a11y.simplifyEffects ? 'low' : resolvedQuality;
   const themeMode = theme === 'polar' ? 'light' : 'dark';
   const [activeId, setActiveId] = useState('about');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -293,7 +295,11 @@ export function App() {
       <A11yPanel
         open={a11yOpen}
         settings={a11y}
+        theme={theme}
+        qualityPref={qualityPref}
         onToggle={toggleSetting}
+        onSetTheme={setTheme}
+        onSetQuality={setQualityPref}
         onClose={() => setA11yOpen(false)}
       />
       <Toast message={toastMsg} />

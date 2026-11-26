@@ -110,6 +110,18 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
     const points = new THREE.Points(pGeo, pMat);
     scene.add(points);
 
+    // Subtle 3D wireframe geometric structure in deep background
+    const wireGeo = new THREE.IcosahedronGeometry(0.42, 1);
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0x00e5ff,
+      wireframe: true,
+      transparent: true,
+      opacity: quality === 'high' ? 0.14 : 0.09
+    });
+    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+    wireMesh.position.set(0.55, 0.15, -0.2);
+    scene.add(wireMesh);
+
     let targetX = 0.5;
     let targetY = 0.5;
     let rafId = 0;
@@ -153,6 +165,8 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
       uniforms.uMouse.value.x += (targetX - uniforms.uMouse.value.x) * 0.05;
       uniforms.uMouse.value.y += (targetY - uniforms.uMouse.value.y) * 0.05;
       points.rotation.z = uniforms.uTime.value * 0.015;
+      wireMesh.rotation.x = uniforms.uTime.value * 0.08 + (uniforms.uMouse.value.y - 0.5) * 0.4;
+      wireMesh.rotation.y = uniforms.uTime.value * 0.11 + (uniforms.uMouse.value.x - 0.5) * 0.4;
       renderer.render(scene, camera);
       rafId = window.requestAnimationFrame(animate);
     };
@@ -180,6 +194,8 @@ export function AuroraScene({ quality, theme }: AuroraSceneProps) {
       planeMat.dispose();
       pGeo.dispose();
       pMat.dispose();
+      wireGeo.dispose();
+      wireMat.dispose();
     };
   }, [quality, theme]);
 
