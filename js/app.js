@@ -164,7 +164,7 @@
     if (btn) {
       btn.addEventListener('click', function () {
         var next = getActiveTheme() === 'dark' ? 'light' : 'dark';
-        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+        try { localStorage.setItem(THEME_KEY, next); } catch (e) { }
         applyTheme(next, true);
       });
     }
@@ -173,7 +173,7 @@
       var mq = window.matchMedia('(prefers-color-scheme: light)');
       var onSystemChange = function (e) {
         var hasManual = false;
-        try { hasManual = !!localStorage.getItem(THEME_KEY); } catch (err) {}
+        try { hasManual = !!localStorage.getItem(THEME_KEY); } catch (err) { }
         if (!hasManual) applyTheme(e.matches ? 'light' : 'dark', true);
       };
       if (mq.addEventListener) mq.addEventListener('change', onSystemChange);
@@ -1071,7 +1071,343 @@
     }
   }
 
-  /* ---------- Scroll Progress & Subtle Pointer Sheen ---------- */
+  /* ---------- Scroll Progress, Preloader, WebGL Aurora, GSAP/Lenis & Desktop FX ---------- */
+  function initPreloader() {
+    var loader = $('preloader');
+    if (!loader) return;
+    if (document.documentElement.classList.contains('skip-intro') || prefersReducedMotion()) {
+      loader.classList.add('is-done');
+      return;
+    }
+
+    var fill = $('preloader-fill');
+    var pct = $('preloader-pct');
+    var progress = 25;
+    var done = false;
+
+    function setProgress(val) {
+      progress = Math.min(100, Math.max(progress, val));
+      if (fill) fill.style.transform = 'scaleX(' + (progress / 100).toFixed(2) + ')';
+      if (pct) pct.textContent = Math.round(progress) + '%';
+    }
+
+    function finish() {
+      if (done) return;
+      done = true;
+      setProgress(100);
+      try { sessionStorage.setItem('nope_intro_seen', '1'); } catch (e) { }
+      setTimeout(function () {
+        loader.classList.add('is-done');
+      }, 180);
+    }
+
+    setProgress(45);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        setProgress(85);
+        setTimeout(finish, 140);
+      }, finish);
+    } else {
+      setTimeout(finish, 260);
+    }
+    // Hard safety cap so external resources never block entry
+    setTimeout(finish, 650);
+  }
+
+  function initWebGLAurora() {
+    var canvas = $('aurora-canvas');
+    if (!canvas || prefersReducedMotion() || window.innerWidth < 900) return;
+
+    var gl = null;
+    try {
+      gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false, powerPreference: 'low-power' });
+    } catch (e) { gl = null; }
+    if (!gl) return;
+
+    var vertSrc =
+      'attribute vec2 a_pos;' +
+      'void main(){gl_Position=vec4(a_pos,0.0,1.0);}';
+
+    var fragSrc =
+      'precision mediump float;' +
+      'uniform vec2 u_res;' +
+      'uniform float u_time;' +
+      'uniform vec2 u_mouse;' +
+      'float wave(vec2 p,float f,float s){return sin(p.x*f+u_time*s+sin(p.y*1.6-u_time*0.25));}' +
+      'void main(){' +
+      'vec2 uv=gl_FragCoord.xy/u_res;' +
+      'vec2 p=(uv-0.5)*vec2(u_res.x/max(u_res.y,1.0),1.0);' +
+      'vec2 m=(u_mouse-0.5)*0.35;' +
+      'float a=wave(p+m,2.4,0.35)*0.5+0.5;' +
+      'float b=wave(p*1.3-m,3.1,-0.28)*0.5+0.5;' +
+      'float c=smoothstep(0.95,0.05,length(p-vec2(m.x*0.6,-m.y*0.6)));' +
+      'vec3 col=vec3(0.031,0.043,0.071);' +
+      'col+=vec3(0.0,0.90,1.0)*(a*0.11*c);' +
+      'col+=vec3(0.545,0.361,0.965)*(b*0.12);' +
+      'col+=vec3(0.925,0.282,0.600)*(pow(a*b,2.0)*0.09);' +
+      'float alpha=clamp((a*0.18+b*0.16)*c,0.0,0.45);' +
+      'gl_FragColor=vec4(col,alpha);' +
+      '}';
+
+    function compile(type, src) {
+      var sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        gl.deleteShader(sh);
+        return null;
+      }
+      return sh;
+    }
+
+    var vs = compile(gl.VERTEX_SHADER, vertSrc);
+    var fs = compile(gl.FRAGMENT_SHADER, fragSrc);
+    if (!vs || !fs) return;
+
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+    var aPos = gl.getAttribLocation(prog, 'a_pos');
+    var uRes = gl.getUniformLocation(prog, 'u_res');
+    var uTime = gl.getUniformLocation(prog, 'u_time');
+    var uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+    var mx = 0.5, my = 0.5, tx = 0.5, ty = 0.5;
+    var rafId = null;
+    var start = performance.now();
+
+    function resize() {
+      var scale = 0.5;
+      canvas.width = Math.max(320, Math.floor(window.innerWidth * scale));
+      canvas.height = Math.max(240, Math.floor(window.innerHeight * scale));
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    function render(now) {
+      if (document.hidden || getActiveTheme() === 'light') {
+        rafId = null;
+        return;
+      }
+      mx += (tx - mx) * 0.05;
+      my += (ty - my) * 0.05;
+
+      gl.useProgram(prog);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, (now - start) * 0.001);
+      gl.uniform2f(uMouse, mx, my);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      rafId = window.requestAnimationFrame(render);
+    }
+
+    function startLoop() {
+      if (!rafId && !document.hidden && getActiveTheme() === 'dark') {
+        rafId = window.requestAnimationFrame(render);
+      }
+    }
+
+    resize();
+    canvas.classList.add('is-ready');
+    startLoop();
+
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('pointermove', function (ev) {
+      tx = ev.clientX / Math.max(window.innerWidth, 1);
+      ty = 1 - ev.clientY / Math.max(window.innerHeight, 1);
+    }, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      } else {
+        startLoop();
+      }
+    });
+    window.addEventListener('pagehide', function () {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      gl.deleteBuffer(buf);
+      gl.deleteProgram(prog);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
+    }, { once: true });
+  }
+
+  function initKineticHero() {
+    var heading = $('hero-name');
+    if (!heading) return;
+    var text = str(heading.textContent).trim();
+    if (!text) return;
+    var words = text.split(/\s+/);
+    clear(heading);
+    words.forEach(function (word, idx) {
+      heading.appendChild(el('span', 'kinetic-word', word));
+      if (idx < words.length - 1) heading.appendChild(document.createTextNode(' '));
+    });
+  }
+
+  function initMotionEngine() {
+    var reduce = prefersReducedMotion();
+    var hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+    if (reduce || !hasGsap) {
+      initReveal();
+      return;
+    }
+
+    var gsap = window.gsap;
+    var ScrollTrigger = window.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Lenis smooth scroll synchronized with ScrollTrigger
+    if (typeof window.Lenis !== 'undefined') {
+      try {
+        var lenis = new window.Lenis({
+          duration: 1.05,
+          easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+          smoothWheel: true
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+
+        // Preserve smooth anchor jumps via Lenis
+        document.addEventListener('click', function (ev) {
+          var anchor = ev.target && ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+          if (!anchor) return;
+          var href = anchor.getAttribute('href');
+          if (!href || href === '#') return;
+          var targetEl = document.querySelector(href);
+          if (targetEl) {
+            ev.preventDefault();
+            lenis.scrollTo(targetEl, { offset: -84 });
+          }
+        });
+      } catch (e) { }
+    }
+
+    // Kinetic Hero Word Entrance
+    var words = document.querySelectorAll('#hero-name .kinetic-word');
+    if (words.length) {
+      gsap.from(words, {
+        y: 18,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity'
+      });
+    }
+
+    // Parallax subtle cover depth
+    var coverImg = $('hero-cover');
+    if (coverImg) {
+      gsap.to(coverImg, {
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+
+    // Reveal Bento sections with ScrollTrigger (keeping CSS visibility clean)
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.card.reveal'));
+    cards.forEach(function (card) {
+      card.classList.add('is-revealed', 'is-settled');
+      if (card.hidden) return;
+      gsap.from(card, {
+        y: 22,
+        opacity: 0,
+        duration: 0.55,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%',
+          once: true
+        }
+      });
+    });
+  }
+
+  function initDesktopInteractions() {
+    if (prefersReducedMotion() || !window.matchMedia) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    // 1. Ambient Cursor Ring
+    var ring = $('cursor-ring');
+    if (ring) {
+      var cx = -100, cy = -100, rx = -100, ry = -100;
+      var active = false;
+      function tickCursor() {
+        rx += (cx - rx) * 0.18;
+        ry += (cy - ry) * 0.18;
+        ring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0)';
+        if (active) window.requestAnimationFrame(tickCursor);
+      }
+      document.addEventListener('pointermove', function (ev) {
+        cx = ev.clientX;
+        cy = ev.clientY;
+        if (!active) {
+          active = true;
+          rx = cx;
+          ry = cy;
+          ring.classList.add('is-visible');
+          window.requestAnimationFrame(tickCursor);
+        }
+        var hit = ev.target && ev.target.closest ? ev.target.closest('a, button, [data-copy]') : null;
+        ring.classList.toggle('is-hover', !!hit);
+      }, { passive: true });
+      document.addEventListener('mouseleave', function () {
+        active = false;
+        ring.classList.remove('is-visible');
+      });
+    }
+
+    // 2. Subtle Magnetic Buttons
+    var magEls = document.querySelectorAll('.btn--primary, .hero__social-btn');
+    Array.prototype.forEach.call(magEls, function (btn) {
+      btn.addEventListener('pointermove', function (ev) {
+        var r = btn.getBoundingClientRect();
+        var dx = ((ev.clientX - r.left) / r.width - 0.5) * 8;
+        var dy = ((ev.clientY - r.top) / r.height - 0.5) * 8;
+        btn.style.transform = 'translate3d(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px,0)';
+      }, { passive: true });
+      btn.addEventListener('pointerleave', function () {
+        btn.style.transform = '';
+      }, { passive: true });
+    });
+
+    // 3. Subtle 3D Tilt Cards (<= 3.5 deg)
+    var tiltEls = document.querySelectorAll('.hero__card, .game-card, .project-card');
+    Array.prototype.forEach.call(tiltEls, function (card) {
+      card.addEventListener('pointermove', function (ev) {
+        var r = card.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        var px = (ev.clientX - r.left) / r.width - 0.5;
+        var py = (ev.clientY - r.top) / r.height - 0.5;
+        var rotY = (px * 5.5).toFixed(2);
+        var rotX = (-py * 4.5).toFixed(2);
+        card.style.transform = 'perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translate3d(0,-3px,0)';
+      }, { passive: true });
+      card.addEventListener('pointerleave', function () {
+        card.style.transform = '';
+      }, { passive: true });
+    });
+  }
+
   function initScrollProgress() {
     var bar = document.querySelector('.scroll-progress');
     if (!bar || prefersReducedMotion()) return;
@@ -1154,13 +1490,17 @@
       }
     });
 
+    initPreloader();
     initCopy();
     initMobileNav();
     initScrollSpy();
     initBackToTop();
-    initReveal();
+    initKineticHero();
+    initMotionEngine();
     initScrollProgress();
     initPointerLight();
+    initDesktopInteractions();
+    setTimeout(initWebGLAurora, 60);
   }
 
   if (document.readyState === 'loading') {
